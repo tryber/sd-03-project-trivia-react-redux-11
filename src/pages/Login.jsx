@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -16,10 +16,11 @@ class Login extends Component {
   }
 
   async handleChange(e) {
+    const { inputPlayerName, inputGravatarEmail } = this.state;
     await this.setState({
       [e.target.id]: e.target.value,
     });
-    if (this.state.inputPlayerName && this.state.inputGravatarEmail) {
+    if (inputPlayerName && inputGravatarEmail) {
       this.setState({ enableButton: false });
     } else {
       this.setState({ enableButton: true });
@@ -67,7 +68,9 @@ class Login extends Component {
     return (
       <div className="row">
         <span>
-          <Link to="/settings" data-testid="btn-settings">Config</Link>
+          <Link to="/settings" data-testid="btn-settings">
+            Config
+          </Link>
         </span>
         <div className="col s12 m6">
           <div className="card blue-grey darken-1">
@@ -77,6 +80,7 @@ class Login extends Component {
             </div>
             <div className="card-action">
               <button
+                type="button"
                 disabled={enableButton}
                 className="waves-effect waves-light btn"
                 data-testid="btn-play"

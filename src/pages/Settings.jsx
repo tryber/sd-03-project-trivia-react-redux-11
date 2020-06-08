@@ -6,7 +6,7 @@ function Settings() {
       <h3 data-testid="settings-title">Settings</h3>
       <div>
         <section>
-        <h4>Category</h4>
+          <h4>Category</h4>
         </section>
         <section>
           <h4>Difficult</h4>
