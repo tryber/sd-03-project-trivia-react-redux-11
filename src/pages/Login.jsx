@@ -16,10 +16,10 @@ class Login extends Component {
   }
 
   async handleChange(e) {
-    const { inputPlayerName, inputGravatarEmail } = this.state;
     await this.setState({
       [e.target.id]: e.target.value,
     });
+    const { inputPlayerName, inputGravatarEmail } = this.state;
     if (inputPlayerName && inputGravatarEmail) {
       this.setState({ enableButton: false });
     } else {
