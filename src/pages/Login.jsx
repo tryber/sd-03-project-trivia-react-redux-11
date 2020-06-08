@@ -67,24 +67,32 @@ class Login extends Component {
     const { enableButton } = this.state;
     return (
       <div className="row">
-        <div className="col s12 m6">
-          <div className="card blue-grey darken-1">
+        <div className="col s6 offset-s3">
+          <div className="card grey darken-3">
             <div className="card-content white-text">
               {this.createInputPlayerName()}
               {this.createInputEmail()}
             </div>
             <div className="card-action">
-              <button
-                type="button"
-                disabled={enableButton}
-                className="waves-effect waves-light btn"
-                data-testid="btn-play"
-              >
-                Play
-              </button>
-              <Link to="/settings" data-testid="btn-settings">
-                <i className="material-icons">settings</i>
-              </Link>
+              <div className="row">
+                <button
+                  type="button"
+                  disabled={enableButton}
+                  className="waves-effect grey darken-3 btn col s4 offset-s4"
+                  data-testid="btn-play"
+                >
+                  Play
+                </button>
+                <Link
+                  to="/settings"
+                  data-testid="btn-settings valign-wrapper"
+                  className="col offset-s2 s1"
+                >
+                  <i className="material-icons" style={{ verticalAlign: '-12px' }}>
+                    settings
+                  </i>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
