@@ -67,11 +67,6 @@ class Login extends Component {
     const { enableButton } = this.state;
     return (
       <div className="row">
-        <span>
-          <Link to="/settings" data-testid="btn-settings">
-            Config
-          </Link>
-        </span>
         <div className="col s12 m6">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
@@ -87,6 +82,9 @@ class Login extends Component {
               >
                 Play
               </button>
+              <Link to="/settings" data-testid="btn-settings">
+                <i className="material-icons">settings</i>
+              </Link>
             </div>
           </div>
         </div>
