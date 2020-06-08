@@ -10,6 +10,8 @@ class Login extends Component {
       enableButton: true,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.createInputPlayerName = this.createInputPlayerName.bind(this);
+    this.createInputEmail = this.createInputEmail.bind(this);
   }
 
   async handleChange(e) {
@@ -23,33 +25,51 @@ class Login extends Component {
     }
   }
 
+  createInputPlayerName() {
+    const { inputPlayerName } = this.state;
+    return (
+      <label htmlFor="inputPlayerName">
+        Nome:
+        <input
+          value={inputPlayerName}
+          onChange={(e) => this.handleChange(e)}
+          required
+          type="text"
+          id="inputPlayerName"
+          name="inputPlayerName"
+          data-testid="input-player-name"
+        />
+      </label>
+    );
+  }
+
+  createInputEmail() {
+    const { inputGravatarEmail } = this.state;
+    return (
+      <label htmlFor="inputGravatarEmail">
+        e-mail:
+        <input
+          value={inputGravatarEmail}
+          onChange={(e) => this.handleChange(e)}
+          required
+          type="text"
+          id="inputGravatarEmail"
+          name="inputGravatarEmail"
+          data-testid="input-gravatar-email"
+        />
+      </label>
+    );
+  }
+
   render() {
-    const { enableButton, inputPlayerName, inputGravatarEmail } = this.state;
+    const { enableButton } = this.state;
     return (
       <div className="row">
         <div className="col s12 m6">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
-              <label htmlFor="inputPlayerName">Nome:</label>
-              <input
-                value={inputPlayerName}
-                onChange={(e) => this.handleChange(e)}
-                required
-                type="text"
-                id="inputPlayerName"
-                name="inputPlayerName"
-                data-testid="input-player-name"
-              />
-              <label htmlFor="inputGravatarEmail">e-mail</label>
-              <input
-                value={inputGravatarEmail}
-                onChange={(e) => this.handleChange(e)}
-                required
-                type="text"
-                id="inputGravatarEmail"
-                name="inputGravatarEmail"
-                data-testid="input-gravatar-email"
-              />
+              {this.createInputPlayerName()}
+              {this.createInputEmail()}
             </div>
             <div className="card-action">
               <button
