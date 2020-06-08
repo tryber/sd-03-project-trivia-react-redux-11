@@ -4,6 +4,7 @@ import logo from './trivia.png';
 import './App.css';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import Footer from './components/Footer';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
             <Settings />
           </Route>
         </Switch>
+        <Footer />
       </div>
     </Router>
   );
