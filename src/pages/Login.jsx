@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch, Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class Login extends Component {
           name="inputPlayerName"
           data-testid="input-player-name"
         />
-        <label htmlFor="inputPlayerName">Nome</label>
+        <label htmlFor="inputPlayerName">Name</label>
       </span>
     );
   }
@@ -65,6 +66,9 @@ class Login extends Component {
     const { enableButton } = this.state;
     return (
       <div className="row">
+        <span>
+          <Link to="/settings" data-testid="btn-settings">Config</Link>
+        </span>
         <div className="col s12 m6">
           <div className="card blue-grey darken-1">
             <div className="card-content white-text">
@@ -77,7 +81,7 @@ class Login extends Component {
                 className="waves-effect waves-light btn"
                 data-testid="btn-play"
               >
-                Jogar
+                Play
               </button>
             </div>
           </div>
