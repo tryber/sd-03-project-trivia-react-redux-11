@@ -28,8 +28,7 @@ class Login extends Component {
   createInputPlayerName() {
     const { inputPlayerName } = this.state;
     return (
-      <label htmlFor="inputPlayerName">
-        Nome:
+      <span>
         <input
           value={inputPlayerName}
           onChange={(e) => this.handleChange(e)}
@@ -39,15 +38,15 @@ class Login extends Component {
           name="inputPlayerName"
           data-testid="input-player-name"
         />
-      </label>
+        <label htmlFor="inputPlayerName">Nome</label>
+      </span>
     );
   }
 
   createInputEmail() {
     const { inputGravatarEmail } = this.state;
     return (
-      <label htmlFor="inputGravatarEmail">
-        e-mail:
+      <span>
         <input
           value={inputGravatarEmail}
           onChange={(e) => this.handleChange(e)}
@@ -57,7 +56,8 @@ class Login extends Component {
           name="inputGravatarEmail"
           data-testid="input-gravatar-email"
         />
-      </label>
+        <label htmlFor="inputGravatarEmail">E-Mail</label>
+      </span>
     );
   }
 
