@@ -81,7 +81,7 @@ class Login extends Component {
             type="button"
             onClick={() => {
               fetch();
-              changeUser(name, gravatarEmail);
+              changeUser({ name, gravatarEmail });
             }}
             disabled={enableButton}
             className="waves-effect deep-orange btn col s4 offset-s4"
@@ -118,8 +118,10 @@ class Login extends Component {
 
 Login.propTypes = {
   fetch: PropTypes.func.isRequired,
+  changeUser: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetch: fetchToken, changeUser: changeUserInfo }, dispatch);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ fetch: fetchToken, changeUser: changeUserInfo }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Login);
