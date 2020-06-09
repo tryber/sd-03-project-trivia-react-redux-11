@@ -27,15 +27,15 @@ const mapStateToProps = ({ gameReducer: { score, name, gravatarEmail } }) => (
 );
 
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(TriviaHeader);
 
-Header.propTypes = {
+TriviaHeader.propTypes = {
   score: PropTypes.number,
   name: PropTypes.string,
   gravatarEmail: PropTypes.string,
 };
 
-Header.defaultProps = {
+TriviaHeader.defaultProps = {
   score: 0,
   name: '',
   gravatarEmail: '',
