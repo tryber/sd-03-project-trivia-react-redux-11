@@ -13,7 +13,7 @@ export async function getTrivia(token) {
 }
 
 export async function getCategory() {
-  return fetch(`https://opentdb.com/api_category.php`)
+  return fetch('https://opentdb.com/api_category.php')
     .then((category) => category
       .json()
       .then((json) => (category.ok ? Promise.resolve(json) : Promise.reject(json))));
