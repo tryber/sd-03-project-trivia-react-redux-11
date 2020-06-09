@@ -15,7 +15,7 @@ const receiveTokenFailure = (error) => ({
   payload: error,
 });
 
-export default function fetchPlanets() {
+export default function fetchToken() {
   return (dispatch) => {
     dispatch(requestToken());
     return getToken()
