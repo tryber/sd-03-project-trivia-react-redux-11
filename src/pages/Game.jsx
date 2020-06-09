@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchTrivia from '../actions/fetchTrivia';
+import TriviaHeader from '../components/TriviaHeader';
 
 const getRandomIndex = (max) => Math.round(Math.random() * max);
 
@@ -45,6 +46,7 @@ export class Game extends Component {
     }
     return (
       <div className="white-text">
+        <TriviaHeader />
         <h4 data-testid="question-category">{results[0].category}</h4>
         <p data-testid="question-text">{results[0].question}</p>
         {this.createAnswersButtons()}
