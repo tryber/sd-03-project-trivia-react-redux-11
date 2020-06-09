@@ -9,6 +9,7 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
   return (
     <div>
       <img
+        className="circle"
         src={`https://www.gravatar.com/avatar/${MD5(trimmedAndLowercasedMail)}`}
         alt="Gravatar profile"
         data-testid="header-profile-picture"
@@ -22,7 +23,7 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
   );
 };
 
-const mapStateToProps = ({ gameReducer: { score, name, gravatarEmail } }) => (
+const mapStateToProps = ({ userReducer: { score, name, gravatarEmail } }) => (
   { score, name, gravatarEmail }
 );
 

@@ -1,6 +1,4 @@
-import {
-  REQUEST_TRIVIA, RECEIVE_TRIVIA_SUCCESS, RECEIVE_TRIVIA_FAILURE,
-} from '../actions/types';
+import { REQUEST_TRIVIA, RECEIVE_TRIVIA_SUCCESS, RECEIVE_TRIVIA_FAILURE } from '../actions/types';
 
 const initialState = {
   gameIsFetching: true,
