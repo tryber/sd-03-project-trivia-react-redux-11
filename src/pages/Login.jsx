@@ -78,7 +78,7 @@ class Login extends Component {
             type="button"
             onClick={() => fetch()}
             disabled={enableButton}
-            className="waves-effect grey darken-3 btn col s4 offset-s4"
+            className="waves-effect deep-orange btn col s4 offset-s4"
             data-testid="btn-play"
           >
             Play
