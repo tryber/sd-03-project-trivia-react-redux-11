@@ -11,3 +11,10 @@ export async function getTrivia(token) {
       .json()
       .then((json) => (trivia.ok ? Promise.resolve(json) : Promise.reject(json))));
 }
+
+export async function getCategory() {
+  return fetch('https://opentdb.com/api_category.php')
+    .then((category) => category
+      .json()
+      .then((json) => (category.ok ? Promise.resolve(json) : Promise.reject(json))));
+}
