@@ -43,6 +43,10 @@ class Settings extends Component {
     this.categorySelect = this.categorySelect.bind(this);
   }
 
+  componentDidMount() {
+    this.setCategories();
+  }
+
   async setCategories() {
     const categories = await getCategory();
     this.setState({
@@ -67,10 +71,6 @@ class Settings extends Component {
         </div>
       </div>
     );
-  }
-
-  componentDidMount() {
-    this.setCategories();
   }
 
   render() {
