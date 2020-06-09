@@ -56,3 +56,7 @@ body {
     transform: translate3d(4px, 0, 0);
   }
 }
+
+.black-coral {
+  background-color: #3E4451;
+}

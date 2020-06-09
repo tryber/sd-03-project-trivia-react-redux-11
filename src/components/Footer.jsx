@@ -3,7 +3,7 @@ import React from 'react';
 function Footer() {
   return (
     <footer>
-      <p>
+      <p className="center-align white-text">
         Desenvolvido por&nbsp;
         <a href="https://www.linkedin.com/in/henriquerezende/">Henrique de Rezende Costa,&nbsp;</a>
         <a href="https://www.linkedin.com/in/henrique-ba%C3%AAta-leite-785a4b15a/">
