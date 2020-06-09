@@ -37,6 +37,7 @@ class Login extends Component {
     return (
       <span>
         <input
+          className="white-text"
           value={inputPlayerName}
           onChange={(e) => this.handleChange(e)}
           required
@@ -55,6 +56,7 @@ class Login extends Component {
     return (
       <span>
         <input
+          className="white-text"
           value={inputGravatarEmail}
           onChange={(e) => this.handleChange(e)}
           required
