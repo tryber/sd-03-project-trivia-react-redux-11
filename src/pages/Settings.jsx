@@ -1,5 +1,34 @@
 import React from 'react';
 
+async function getCategory() {
+  const select = document.querySelector('select[name=category]')
+  return fetch('https://opentdb.com/api_category.php')
+    .then((res) => res
+      .json()
+      .then((json) => {
+        select.innerHTML += json.map((el) => `<option value="${el.id}">${el.name}</option>`)
+      })
+    )
+}
+
+const categorySelect = () => (
+  <div>
+  <div className="input-field col s12">
+    <select className="browser-default" name="category" id="category">
+      <option value="" disabled selected>
+        Choose your option
+      </option>
+      
+      {getCategory().map(el => (
+        <option value={el}>{el}</option>  
+      ))}
+
+    </select>
+  </div>
+  <label htmlFor="difficult">Difficult</label>
+</div>
+)
+
 const difficultSelect = () => (
   <div>
     <div className="input-field col s12">
@@ -38,6 +67,7 @@ const Settings = () => (
         <h3 data-testid="settings-title">Settings</h3>
         <div className="col s6 offset-s3">
           <h4>Category</h4>
+          {categorySelect()}
           {difficultSelect()}
           {typeSelect()}
         </div>
