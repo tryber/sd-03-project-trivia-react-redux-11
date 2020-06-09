@@ -62,7 +62,7 @@ const typeSelect = () => (
 
 const Settings = () => (
   <div className="container">
-    <div className="row black-coral white-text">
+    <div className="row black-coral white-text radius-border-10">
       <div className="center-align">
         <h3 data-testid="settings-title">Settings</h3>
         <div className="col s6 offset-s3">
