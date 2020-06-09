@@ -4,7 +4,7 @@ import MD5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 
-const Header = ({ score, name, gravatarEmail }) => {
+const TriviaHeader = ({ score, name, gravatarEmail }) => {
   const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
   return (
     <div>
