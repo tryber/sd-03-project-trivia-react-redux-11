@@ -1,32 +1,49 @@
 import React from 'react';
 
-function Settings() {
-  return (
-    <div>
-      <h3 data-testid="settings-title">Settings</h3>
-      <div>
-        <section>
-          <h4>Category</h4>
-        </section>
-        <section>
-          <h4>Difficult</h4>
-          <select name="difficult" id="difficult">
-            <option value="easy">easy</option>
-            <option value="medium">medium</option>
-            <option value="hard">hard</option>
-          </select>
-        </section>
+const difficultSelect = () => (
+  <div>
+    <div className="input-field col s12">
+      <select className="browser-default" id="difficult">
+        <option value="" disabled selected>
+          Choose your option
+        </option>
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <label htmlFor="difficult">Difficult</label>
+  </div>
+);
 
-        <section>
-          <h4>Type</h4>
-          <select name="" id="">
-            <option value="multiple">Multiple Choice</option>
-            <option value="trueOrFalse">True or False</option>
-          </select>
-        </section>
+const typeSelect = () => (
+  <div>
+    <div className="input-field col s12">
+      <select className="browser-default" id="type">
+        <option value="" disabled selected>
+          Choose your option
+        </option>
+        <option value="multiple">Multiple Choice</option>
+        <option value="trueOrFalse">True or False</option>
+      </select>
+    </div>
+    <label htmlFor="type">Type</label>
+  </div>
+);
+
+const Settings = () => (
+  <div className="container">
+    <div className="row grey darken-3">
+      <div className="center-align">
+        <h3 data-testid="settings-title">Settings</h3>
+        <div className="col s6 offset-s3">
+          <h4>Category</h4>
+          {difficultSelect()}
+          {typeSelect()}
+        </div>
       </div>
     </div>
-  );
-}
+  </div>
+);
 
 export default Settings;
