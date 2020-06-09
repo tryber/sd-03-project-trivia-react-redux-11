@@ -99,7 +99,7 @@ class Login extends Component {
     return (
       <div className="row">
         <div className="col s6 offset-s3">
-          <div className="card black-coral">
+          <div className="card black-coral radius-border-10">
             <div className="card-content white-text">
               {this.createInputPlayerName()}
               {this.createInputEmail()}

@@ -3,18 +3,18 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  isFetching: true,
+  tokenIsFetching: true,
   token: [],
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case REQUEST_TOKEN:
-      return { ...state, isFetching: true };
+      return { ...state, tokenIsFetching: true };
     case RECEIVE_TOKEN_SUCCESS:
-      return { ...state, isFetching: false, token: payload };
+      return { ...state, tokenIsFetching: false, token: payload };
     case RECEIVE_TOKEN_FAILURE:
-      return { ...state, isFetching: false, error: payload };
+      return { ...state, tokenIsFetching: false, error: payload };
     default:
       return state;
   }
