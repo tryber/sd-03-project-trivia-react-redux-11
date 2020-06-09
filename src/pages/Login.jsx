@@ -72,25 +72,23 @@ class Login extends Component {
     const { fetch } = this.props;
     const { enableButton } = this.state;
     return (
-      <div className="card-action">
-        <div className="row">
-          <Link to="/game">
-            <button
-              type="button"
-              onClick={() => fetch()}
-              disabled={enableButton}
-              className="waves-effect grey darken-3 btn col s4 offset-s4"
-              data-testid="btn-play"
-            >
-              Play
-            </button>
-          </Link>
-          <Link to="/settings" data-testid="btn-settings" className="col offset-s2 s1">
-            <i className="material-icons" style={{ verticalAlign: '-12px' }}>
-              settings
-            </i>
-          </Link>
-        </div>
+      <div className="row">
+        <Link to="/game">
+          <button
+            type="button"
+            onClick={() => fetch()}
+            disabled={enableButton}
+            className="waves-effect grey darken-3 btn col s4 offset-s4"
+            data-testid="btn-play"
+          >
+            Play
+          </button>
+        </Link>
+        <Link to="/settings" data-testid="btn-settings" className="col offset-s2 s1">
+          <i className="material-icons" style={{ verticalAlign: '-12px' }}>
+            settings
+          </i>
+        </Link>
       </div>
     );
   }
