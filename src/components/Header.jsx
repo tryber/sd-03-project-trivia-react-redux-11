@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../trivia.png';
+import PropTypes from 'prop-types';
 
 function Header({ children }) {
   return (
@@ -11,5 +12,9 @@ function Header({ children }) {
     </div>
   );
 }
+
+Header.propTypes = {
+  children: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Header;
