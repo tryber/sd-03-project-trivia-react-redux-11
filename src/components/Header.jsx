@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from '../trivia.png';
 import PropTypes from 'prop-types';
+import logo from '../trivia.png';
 
 function Header({ children }) {
   return (
