@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import apiReducer from './apiReducer';
+import tokenReducer from './tokenReducer';
 
-const rootReducer = combineReducers({ apiReducer });
+const rootReducer = combineReducers({ tokenReducer });
 
 export default rootReducer;

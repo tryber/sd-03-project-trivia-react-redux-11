@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import fetchToken from '../actions/fetchToken';
 
 class Login extends Component {
   constructor(props) {
@@ -65,23 +69,23 @@ class Login extends Component {
   }
 
   cardButtons() {
+    const { fetch } = this.props;
     const { enableButton } = this.state;
     return (
       <div className="card-action">
         <div className="row">
-          <button
-            type="button"
-            disabled={enableButton}
-            className="waves-effect grey darken-3 btn col s4 offset-s4"
-            data-testid="btn-play"
-          >
-            Play
-          </button>
-          <Link
-            to="/settings"
-            data-testid="btn-settings valign-wrapper"
-            className="col offset-s2 s1"
-          >
+          <Link to="/game">
+            <button
+              type="button"
+              onClick={() => fetch()}
+              disabled={enableButton}
+              className="waves-effect grey darken-3 btn col s4 offset-s4"
+              data-testid="btn-play"
+            >
+              Play
+            </button>
+          </Link>
+          <Link to="/settings" data-testid="btn-settings" className="col offset-s2 s1">
             <i className="material-icons" style={{ verticalAlign: '-12px' }}>
               settings
             </i>
@@ -108,4 +112,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  fetch: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ fetch: fetchToken }, dispatch);
+
+export default connect(null, mapDispatchToProps)(Login);
