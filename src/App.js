@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import Footer from './components/Footer';
 import Header from './components/Header';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
             <Settings />
           </Route>
         </Switch>
+        <Footer />
       </Header>
     </Router>
   );
