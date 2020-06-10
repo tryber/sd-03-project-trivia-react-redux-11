@@ -4,14 +4,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchToken from '../actions/fetchToken';
+import changeUserInfo from '../actions/changeUserInfo';
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      inputPlayerName: '',
-      inputGravatarEmail: '',
+      name: '',
+      gravatarEmail: '',
       enableButton: true,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -24,8 +25,8 @@ class Login extends Component {
     await this.setState({
       [e.target.id]: e.target.value,
     });
-    const { inputPlayerName, inputGravatarEmail } = this.state;
-    if (inputPlayerName && inputGravatarEmail) {
+    const { name, gravatarEmail } = this.state;
+    if (name && gravatarEmail) {
       this.setState({ enableButton: false });
     } else {
       this.setState({ enableButton: true });
@@ -33,16 +34,16 @@ class Login extends Component {
   }
 
   createInputPlayerName() {
-    const { inputPlayerName } = this.state;
+    const { name } = this.state;
     return (
       <span>
         <input
           className="white-text"
-          value={inputPlayerName}
+          value={name}
           onChange={(e) => this.handleChange(e)}
           required
           type="text"
-          id="inputPlayerName"
+          id="name"
           name="inputPlayerName"
           data-testid="input-player-name"
         />
@@ -52,33 +53,36 @@ class Login extends Component {
   }
 
   createInputEmail() {
-    const { inputGravatarEmail } = this.state;
+    const { gravatarEmail } = this.state;
     return (
       <span>
         <input
           className="white-text"
-          value={inputGravatarEmail}
+          value={gravatarEmail}
           onChange={(e) => this.handleChange(e)}
           required
           type="text"
-          id="inputGravatarEmail"
-          name="inputGravatarEmail"
+          id="gravatarEmail"
+          name="gravatarEmail"
           data-testid="input-gravatar-email"
         />
-        <label htmlFor="inputGravatarEmail">E-Mail</label>
+        <label htmlFor="gravatarEmail">E-Mail</label>
       </span>
     );
   }
 
   cardButtons() {
-    const { fetch } = this.props;
-    const { enableButton } = this.state;
+    const { fetch, changeUser } = this.props;
+    const { enableButton, name, gravatarEmail } = this.state;
     return (
       <div className="row">
         <Link to="/game">
           <button
             type="button"
-            onClick={() => fetch()}
+            onClick={() => {
+              fetch();
+              changeUser(name, gravatarEmail);
+            }}
             disabled={enableButton}
             className="waves-effect deep-orange btn col s4 offset-s4"
             data-testid="btn-play"
@@ -114,8 +118,11 @@ class Login extends Component {
 
 Login.propTypes = {
   fetch: PropTypes.func.isRequired,
+  changeUser: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetch: fetchToken }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  { fetch: fetchToken, changeUser: changeUserInfo }, dispatch,
+);
 
 export default connect(null, mapDispatchToProps)(Login);

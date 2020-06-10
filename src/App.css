@@ -12,11 +12,11 @@ body {
 }
 
 .red-border {
-  border: 1px solid red;
+  border: 3px solid red;
 }
 
 .green-border {
-  border: 1px solid green;
+  border: 3px solid rgb(6, 240, 15);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -61,6 +61,36 @@ body {
   background-color: #3E4451;
 }
 
+.black-coral-2 {
+  background-color: #596273;
+}
+
 .radius-border-10 {
   border-radius: 10px;
+}
+
+.loading {
+  animation: spin 1s linear infinite;
+  border: 8px solid rgba(255, 87, 34, 1);
+  border-left-color: rgb(255, 130, 92);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+@keyframes spin {
+
+  to { transform: rotate( 360deg ); }
+}
+
+.width-90 {
+  width: 90%;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.margin-10p {
+  margin: 10px;
 }
