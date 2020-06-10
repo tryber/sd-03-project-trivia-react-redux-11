@@ -21,24 +21,22 @@ class Feedback extends Component {
     const answerTitle = assertions >= 3 ? 'Mandou bem!' : 'Podia ser melhor...';
     return (
       <div>
-        <header>
-          <TriviaHeader />
-        </header>
-        <section>
+        <header><TriviaHeader /></header>
           <h2 data-testid="feedback-text">{answerTitle}</h2>
           <h3 data-testid="feedback-total-question">{`Você acertou ${assertions || 0} questões!`}</h3>
           <h3 data-testid="feedback-total-score">{`Um total de ${score || 0} pontos`}</h3>
-        </section>
         <section>
           <div>
-            <Link data-testid="btn-ranking"
+            <Link 
+              data-testid="btn-ranking"
               to="/ranking"
             >
               VER RANKING
             </Link>
           </div>
           <div>
-            <Link data-testid="btn-play-again"
+            <Link 
+            data-testid="btn-play-again"
               to="/"
               onClick={() => { Feedback.redirectGame(resetTimerNow, resetScore, resetFilter); }}
             >
