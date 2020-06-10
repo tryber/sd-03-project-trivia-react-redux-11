@@ -1,9 +1,13 @@
+body {
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 20vmin;
   pointer-events: none;
 }
 
@@ -22,8 +26,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  min-height: 30vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,4 +55,12 @@
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
+}
+
+.black-coral {
+  background-color: #3E4451;
+}
+
+.radius-border-10 {
+  border-radius: 10px;
 }
