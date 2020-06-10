@@ -46,8 +46,7 @@ export class Game extends Component {
       </li>
     ));
     answers.splice(
-      randomIndexes[0],
-      0,
+      randomIndexes[0], 0,
       <li>
         <button
           data-testid="correct-answer"

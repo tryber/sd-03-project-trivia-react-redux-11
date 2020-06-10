@@ -10,21 +10,24 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
       <div className="black-coral-2 ">
         <img
           className="circle"
-          style={{
-            width: '50px',
-            verticalAlign: '-20px',
-            marginLeft: '10px',
-          }}
+          style={{ width: '50px', verticalAlign: '-20px', marginLeft: '10px' }}
           src={`https://www.gravatar.com/avatar/${MD5(trimmedAndLowercasedMail)}`}
           alt="Gravatar profile"
           data-testid="header-profile-picture"
         />
         <ul className="right">
           <li>
-            <span data-testid="header-player-name" className="margin-10p">{`Jogador: ${name}`}</span>
+            <span
+              data-testid="header-player-name"
+              className="margin-10p"
+            >
+              {`Jogador: ${name}`}
+            </span>
           </li>
           <li>
-            <span data-testid="header-score" className="margin-10p">Pontos: {score}</span>
+            <span data-testid="header-score" className="margin-10p">
+              Pontos: {score}
+            </span>
           </li>
         </ul>
       </div>
