@@ -18,6 +18,7 @@ export class Game extends Component {
     this.createAnswersButtons = this.createAnswersButtons.bind(this);
     this.changeClass = this.changeClass.bind(this);
     this.createCorrectAnswerIndexes = this.createCorrectAnswerIndexes.bind(this);
+    this.fetchTrivia = this.fetchTrivia.bind(this);
   }
 
   changeClass() {
@@ -58,24 +59,30 @@ export class Game extends Component {
   }
 
   createCorrectAnswerIndexes() {
+    const { randomIndexes } = this.state;
     const { results } = this.props;
-    const index = Object.values(results)
-      .map((result) => getRandomIndex(result.incorrect_answers.length));
-    this.setState({ randomIndexes: index });
+    if (results.length > 0 && randomIndexes.length === 0) {
+      const index = Object.values(results)
+        .map((result) => getRandomIndex(result.incorrect_answers.length));
+      this.setState({ randomIndexes: index });
+    }
   }
 
-  render() {
-    const { token, fetch, tokenIsFetching, responseCode, gameIsFetching, results } = this.props;
-    const { randomIndexes } = this.state;
+  fetchTrivia() {
+    const { tokenIsFetching, responseCode, token, fetch } = this.props;
     if (!tokenIsFetching && responseCode === -1) {
       fetch(token);
     }
+  }
+
+  render() {
+    const { results } = this.props;
+    this.fetchTrivia();
+    const { gameIsFetching, tokenIsFetching } = this.props;
     if (tokenIsFetching || gameIsFetching) {
       return <span>Loading</span>;
     }
-    if (results.length > 0 && randomIndexes.length === 0) {
-      this.createCorrectAnswerIndexes();
-    }
+    this.createCorrectAnswerIndexes();
     return (
       <div className="white-text">
         <TriviaHeader />
