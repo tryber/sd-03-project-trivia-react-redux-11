@@ -64,3 +64,17 @@ body {
 .radius-border-10 {
   border-radius: 10px;
 }
+
+.loading {
+  animation: spin 1s linear infinite;
+  border: 8px solid rgba(255, 87, 34, 1);
+  border-left-color: rgb(255, 130, 92);
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+@keyframes spin {
+
+  to { transform: rotate( 360deg ); }
+}

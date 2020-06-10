@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchTrivia from '../actions/fetchTrivia';
 import TriviaHeader from '../components/TriviaHeader';
+import Loading from '../components/Loading';
 
 const getRandomIndex = (max) => Math.round(Math.random() * max);
 
@@ -76,12 +77,11 @@ export class Game extends Component {
   }
 
   render() {
-    const { results } = this.props;
-    this.fetchTrivia();
-    const { gameIsFetching, tokenIsFetching } = this.props;
+    const { results, gameIsFetching, tokenIsFetching } = this.props;
     if (tokenIsFetching || gameIsFetching) {
-      return <span>Loading</span>;
+      return <Loading />;
     }
+    this.fetchTrivia();
     this.createCorrectAnswerIndexes();
     return (
       <div className="white-text">
