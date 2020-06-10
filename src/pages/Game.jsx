@@ -33,28 +33,32 @@ export class Game extends Component {
     const { results } = this.props;
     const { correctAnswerClass, incorrectAnswerClass, randomIndexes } = this.state;
     const answers = results[0].incorrect_answers.map((answer, index) => (
-      <button
-        data-testid={`wrong-answer-${index}`}
-        type="button"
-        key={answer}
-        className={incorrectAnswerClass}
-        onClick={() => this.changeClass()}
-      >
-        {answer}
-      </button>
+      <li>
+        <button
+          data-testid={`wrong-answer-${index}`}
+          type="button"
+          key={answer}
+          className={`waves-effect deep-orange btn width-90 margin-10p ${incorrectAnswerClass}`}
+          onClick={() => this.changeClass()}
+        >
+          {answer}
+        </button>
+      </li>
     ));
     answers.splice(
       randomIndexes[0],
       0,
-      <button
-        data-testid="correct-answer"
-        className={correctAnswerClass}
-        onClick={() => this.changeClass()}
-        type="button"
-        key={results[0].correct_answer}
-      >
-        {results[0].correct_answer}
-      </button>,
+      <li>
+        <button
+          data-testid="correct-answer"
+          className={`waves-effect deep-orange btn width-90 margin-10p ${correctAnswerClass}`}
+          onClick={() => this.changeClass()}
+          type="button"
+          key={results[0].correct_answer}
+        >
+          {results[0].correct_answer}
+        </button>
+      </li>,
     );
     return answers;
   }
@@ -63,8 +67,9 @@ export class Game extends Component {
     const { randomIndexes } = this.state;
     const { results } = this.props;
     if (results.length > 0 && randomIndexes.length === 0) {
-      const index = Object.values(results)
-        .map((result) => getRandomIndex(result.incorrect_answers.length));
+      const index = Object.values(results).map((result) =>
+        getRandomIndex(result.incorrect_answers.length),
+      );
       this.setState({ randomIndexes: index });
     }
   }
@@ -84,11 +89,19 @@ export class Game extends Component {
     }
     this.createCorrectAnswerIndexes();
     return (
-      <div className="white-text">
-        <TriviaHeader />
-        <h4 data-testid="question-category">{results[0].category}</h4>
-        <p data-testid="question-text">{results[0].question}</p>
-        {this.createAnswersButtons()}
+      <div className="row">
+        <div className="white-text container col offset-s4 s4">
+          <TriviaHeader />
+          <div className="row black-coral">
+            <div className="col s6">
+              <h5 data-testid="question-category">{results[0].category}</h5>
+              <p data-testid="question-text">{results[0].question}</p>
+            </div>
+            <div className="col s6">
+              <ul>{this.createAnswersButtons()}</ul>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
