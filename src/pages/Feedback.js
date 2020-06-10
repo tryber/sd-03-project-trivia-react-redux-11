@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import TriviaHeader from '../components/TriviaHeader';
 
 class Feedback extends Component {
@@ -28,7 +27,7 @@ class Feedback extends Component {
             <Link
               data-testid="btn-play-again"
               to="/"
-             >
+            >
               JOGAR NOVAMENTE
             </Link>
           </div>
