@@ -13,7 +13,7 @@ const getRandomIndex = (max) => Math.round(Math.random() * max);
 
 const calculateScore = (timer, difficulty) => {
   const dif = { hard: 3, medium: 2, easy: 1 };
-  return 10 + (timer * dif[difficulty]);
+  return 10 + timer * dif[difficulty];
 };
 
 export class Game extends Component {
@@ -37,6 +37,7 @@ export class Game extends Component {
     this.incorrectAnswerButton = this.incorrectAnswerButton.bind(this);
     this.correctAnswerButton = this.correctAnswerButton.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.nextButton = this.nextButton.bind(this);
   }
 
   componentDidMount() {
@@ -118,8 +119,9 @@ export class Game extends Component {
   createAnswersButtons() {
     const { results } = this.props;
     const { randomIndexes, questionIndex } = this.state;
-    const answers = results[questionIndex].incorrect_answers
-      .map((answer, index) => this.incorrectAnswerButton(answer, index));
+    const answers = results[questionIndex].incorrect_answers.map((answer, index) =>
+      this.incorrectAnswerButton(answer, index),
+    );
     answers.splice(randomIndexes[questionIndex], 0, this.correctAnswerButton());
     return answers;
   }
@@ -128,8 +130,9 @@ export class Game extends Component {
     const { randomIndexes } = this.state;
     const { results } = this.props;
     if (results.length > 0 && randomIndexes.length === 0) {
-      const index = Object.values(results)
-        .map((result) => getRandomIndex(result.incorrect_answers.length));
+      const index = Object.values(results).map((result) =>
+        getRandomIndex(result.incorrect_answers.length),
+      );
       this.setState({ randomIndexes: index });
     }
   }
@@ -158,9 +161,23 @@ export class Game extends Component {
     this.timerCountdown();
   }
 
+  nextButton() {
+    const { nextButtonClass } = this.state;
+    return (
+      <button
+        type="button"
+        className={nextButtonClass}
+        data-testid="btn-next"
+        onClick={() => this.nextQuestion()}
+      >
+        Next
+      </button>
+    );
+  }
+
   render() {
     const { results, gameIsFetching, tokenIsFetching } = this.props;
-    const { timer, questionIndex, nextButtonClass } = this.state;
+    const { timer, questionIndex } = this.state;
     this.fetchTrivia();
     if (tokenIsFetching || gameIsFetching) {
       return <Loading />;
@@ -180,24 +197,18 @@ export class Game extends Component {
               <ul>{this.createAnswersButtons()}</ul>
             </div>
           </div>
-          <button
-            type="button"
-            className={nextButtonClass}
-            data-testid="btn-next"
-            onClick={() => this.nextQuestion()}
-          >
-            Next
-          </button>
+          {this.nextButton()}
         </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
-  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
-  dispatch,
-);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
+    dispatch,
+  );
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token.token,
