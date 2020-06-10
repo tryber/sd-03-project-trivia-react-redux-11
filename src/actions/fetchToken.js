@@ -1,4 +1,4 @@
-import getToken from '../services/apiRequest';
+import { getToken } from '../services/apiRequest';
 import { REQUEST_TOKEN, RECEIVE_TOKEN_SUCCESS, RECEIVE_TOKEN_FAILURE } from './types';
 
 const requestToken = () => ({

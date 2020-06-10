@@ -14,7 +14,7 @@ function Header({ children }) {
 }
 
 Header.propTypes = {
-  children: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Header;
