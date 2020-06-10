@@ -3,29 +3,43 @@ import { connect } from 'react-redux';
 import MD5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
-
 const TriviaHeader = ({ score, name, gravatarEmail }) => {
   const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
   return (
-    <div>
-      <img
-        src={`https://www.gravatar.com/avatar/${MD5(trimmedAndLowercasedMail)}`}
-        alt="Gravatar profile"
-        data-testid="header-profile-picture"
-      />
-      <h1 data-testid="header-player-name">{`Jogador: ${name}`}</h1>
-      <h2>
-        Pontos:
-        <span data-testid="header-score">{score}</span>
-      </h2>
-    </div>
+    <nav>
+      <div className="black-coral-2 ">
+        <img
+          className="circle"
+          style={{ width: '50px', verticalAlign: '-20px', marginLeft: '10px' }}
+          src={`https://www.gravatar.com/avatar/${MD5(trimmedAndLowercasedMail)}`}
+          alt="Gravatar profile"
+          data-testid="header-profile-picture"
+        />
+        <ul className="right">
+          <li>
+            <span
+              data-testid="header-player-name"
+              className="margin-10p"
+            >
+              {`Jogador: ${name}`}
+            </span>
+          </li>
+          <li>
+            <span data-testid="header-score" className="margin-10p">
+              Pontos: {score}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 
-const mapStateToProps = ({ gameReducer: { score, name, gravatarEmail } }) => (
-  { score, name, gravatarEmail }
-);
-
+const mapStateToProps = ({ userReducer: { score, name, gravatarEmail } }) => ({
+  score,
+  name,
+  gravatarEmail,
+});
 
 export default connect(mapStateToProps)(TriviaHeader);
 
