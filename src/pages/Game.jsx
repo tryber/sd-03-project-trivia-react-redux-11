@@ -13,7 +13,7 @@ const getRandomIndex = (max) => Math.round(Math.random() * max);
 
 const calculateScore = (timer, difficulty) => {
   const dif = { hard: 3, medium: 2, easy: 1 };
-  return 10 + timer * dif[difficulty];
+  return 10 + (timer * dif[difficulty]);
 };
 
 export class Game extends Component {
