@@ -28,8 +28,7 @@ class Feedback extends Component {
             <Link
               data-testid="btn-play-again"
               to="/"
-              onClick={() => { Feedback.redirectGame(resetTimerNow, resetScore, resetFilter); }}
-            >
+             >
               JOGAR NOVAMENTE
             </Link>
           </div>
