@@ -12,14 +12,43 @@ export class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      intervalId: 0,
       incorrectAnswerClass: '',
       correctAnswerClass: '',
       randomIndexes: [],
+      timer: 30,
+      disableButton: false,
     };
     this.createAnswersButtons = this.createAnswersButtons.bind(this);
     this.changeClass = this.changeClass.bind(this);
     this.createCorrectAnswerIndexes = this.createCorrectAnswerIndexes.bind(this);
     this.fetchTrivia = this.fetchTrivia.bind(this);
+    this.timerCountdown = this.timerCountdown.bind(this);
+  }
+
+  componentDidMount() {
+    this.timerCountdown();
+  }
+
+  componentWillUnmount() {
+    const { intervalId } = this.state;
+    clearInterval(intervalId);
+  }
+
+  timerCountdown() {
+    const intervalId = setInterval(() => {
+      this.setState((state) => {
+        if (state.timer > 1) {
+          return { timer: state.timer - 1 };
+        }
+        this.changeClass();
+        return {
+          disableButton: true,
+          timer: 0,
+        };
+      });
+    }, 1000);
+    this.setState({ intervalId });
   }
 
   changeClass() {
@@ -31,13 +60,14 @@ export class Game extends Component {
 
   createAnswersButtons() {
     const { results } = this.props;
-    const { correctAnswerClass, incorrectAnswerClass, randomIndexes } = this.state;
+    const { correctAnswerClass, incorrectAnswerClass, randomIndexes, disableButton } = this.state;
     const answers = results[0].incorrect_answers.map((answer, index) => (
       <li>
         <button
           data-testid={`wrong-answer-${index}`}
           type="button"
           key={answer}
+          disabled={disableButton}
           className={`waves-effect deep-orange btn width-90 margin-10p ${incorrectAnswerClass}`}
           onClick={() => this.changeClass()}
         >
@@ -46,13 +76,15 @@ export class Game extends Component {
       </li>
     ));
     answers.splice(
-      randomIndexes[0], 0,
+      randomIndexes[0],
+      0,
       <li>
         <button
           data-testid="correct-answer"
           className={`waves-effect deep-orange btn width-90 margin-10p ${correctAnswerClass}`}
           onClick={() => this.changeClass()}
           type="button"
+          disabled={disableButton}
           key={results[0].correct_answer}
         >
           {results[0].correct_answer}
@@ -82,6 +114,7 @@ export class Game extends Component {
 
   render() {
     const { results, gameIsFetching, tokenIsFetching } = this.props;
+    const { timer } = this.state;
     this.fetchTrivia();
     if (tokenIsFetching || gameIsFetching) {
       return <Loading />;
@@ -95,6 +128,7 @@ export class Game extends Component {
             <div className="col s6">
               <h5 data-testid="question-category">{results[0].category}</h5>
               <p data-testid="question-text">{results[0].question}</p>
+              <p>Tempo: {timer}</p>
             </div>
             <div className="col s6">
               <ul>{this.createAnswersButtons()}</ul>
