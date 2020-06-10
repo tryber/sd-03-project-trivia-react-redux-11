@@ -3,19 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import TriviaHeader from '../components/TriviaHeader';
-import { resetTimer } from '../actions/TimerActions';
-import { resetPoints } from '../actions/resetPoints';
-import { resetAllFilters } from '../actions/resetFilters';
 
 class Feedback extends Component {
-  static redirectGame(resetTimerNow, resetScore, resetFilter) {
-    resetTimerNow();
-    resetScore();
-    resetFilter();
-  }
-
   render() {
-    const { resetTimerNow, resetScore, resetFilter } = this.props;
     const state = (localStorage.getItem('state') !== null) ? JSON.parse(localStorage.getItem('state')) : { player: { assertions: '', score: '' } };
     const { assertions, score } = state.player;
     const answerTitle = assertions >= 3 ? 'Mandou bem!' : 'Podia ser melhor...';
@@ -49,17 +39,4 @@ class Feedback extends Component {
   }
 }
 
-Feedback.propTypes = {
-  resetTimerNow: PropTypes.func.isRequired,
-  resetScore: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  resetTimerNow: () => dispatch(resetTimer()),
-  resetScore: () => dispatch(resetPoints()),
-  resetFilter: () => dispatch(resetAllFilters()),
-});
-
-
-export default connect(null, mapDispatchToProps)(Feedback);
+export default connect(null)(Feedback);
