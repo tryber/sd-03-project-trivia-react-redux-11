@@ -17,6 +17,7 @@ export class Game extends Component {
     };
     this.createAnswersButtons = this.createAnswersButtons.bind(this);
     this.changeClass = this.changeClass.bind(this);
+    this.createCorrectAnswerIndexes = this.createCorrectAnswerIndexes.bind(this);
   }
 
   changeClass() {
@@ -56,6 +57,13 @@ export class Game extends Component {
     return answers;
   }
 
+  createCorrectAnswerIndexes() {
+    const { results } = this.props;
+    const index = Object.values(results)
+      .map((result) => getRandomIndex(result.incorrect_answers.length));
+    this.setState({ randomIndexes: index });
+  }
+
   render() {
     const { token, fetch, tokenIsFetching, responseCode, gameIsFetching, results } = this.props;
     const { randomIndexes } = this.state;
@@ -66,9 +74,7 @@ export class Game extends Component {
       return <span>Loading</span>;
     }
     if (results.length > 0 && randomIndexes.length === 0) {
-      const index = Object.values(results)
-        .map((result) => getRandomIndex(result.incorrect_answers.length));
-      this.setState({ randomIndexes: index });
+      this.createCorrectAnswerIndexes();
     }
     return (
       <div className="white-text">
