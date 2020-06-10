@@ -1,23 +1,23 @@
 import { CHANGE_USER_INFO, CHANGE_SCORE, ADD_ASSERTION } from '../actions/types';
 
-let score = 0;
-let name = '';
-let gravatarEmail = '';
+let initialScore = 0;
+let initialName = '';
+let initialGravatarEmail = '';
 let assertions = 0;
 
 if (localStorage.getItem('state')) {
   const stt = JSON.parse(localStorage.getItem('state'));
-  score = stt.player.score;
-  name = stt.player.name;
-  gravatarEmail = stt.player.gravatarEmail;
+  initialScore = stt.player.score;
+  initialName = stt.player.name;
+  initialGravatarEmail = stt.player.gravatarEmail;
   assertions = stt.player.assertions;
 }
 
 const initialState = {
   player: {
-    score,
-    name,
-    gravatarEmail,
+    score: initialScore,
+    name: initialName,
+    gravatarEmail: initialGravatarEmail,
     assertions,
   },
 };

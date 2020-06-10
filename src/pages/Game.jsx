@@ -181,6 +181,7 @@ Game.propTypes = {
   token: PropTypes.string,
   fetch: PropTypes.func.isRequired,
   changeScr: PropTypes.func.isRequired,
+  addAssert: PropTypes.func.isRequired,
   tokenIsFetching: PropTypes.bool.isRequired,
   responseCode: PropTypes.number.isRequired,
   gameIsFetching: PropTypes.bool.isRequired,
