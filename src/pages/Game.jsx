@@ -78,10 +78,10 @@ export class Game extends Component {
 
   render() {
     const { results, gameIsFetching, tokenIsFetching } = this.props;
+    this.fetchTrivia();
     if (tokenIsFetching || gameIsFetching) {
       return <Loading />;
     }
-    this.fetchTrivia();
     this.createCorrectAnswerIndexes();
     return (
       <div className="white-text">
