@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import fetchTrivia from '../actions/fetchTrivia';
 import TriviaHeader from '../components/TriviaHeader';
 import Loading from '../components/Loading';
 import changeScore from '../actions/changeScore';
 import addAssertion from '../actions/addAssertion';
-import { withRouter } from "react-router-dom";
 
 const getRandomIndex = (max) => Math.round(Math.random() * max);
 
@@ -180,7 +180,14 @@ export class Game extends Component {
               <ul>{this.createAnswersButtons()}</ul>
             </div>
           </div>
-          <button type="button" className={nextButtonClass} data-testid="btn-next" onClick={() => this.nextQuestion()}>Next</button>
+          <button
+            type="button"
+            className={nextButtonClass}
+            data-testid="btn-next"
+            onClick={() => this.nextQuestion()}
+          >
+            Next
+          </button>
         </div>
       </div>
     );
