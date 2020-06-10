@@ -10,19 +10,46 @@ const getRandomIndex = (max) => Math.round(Math.random() * max);
 export class Game extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      incorrectAnswerClass: '',
+      correctAnswerClass: '',
+      randomIndexes: [],
+    };
     this.createAnswersButtons = this.createAnswersButtons.bind(this);
+    this.changeClass = this.changeClass.bind(this);
+  }
+
+  changeClass() {
+    this.setState({
+      incorrectAnswerClass: 'red-border',
+      correctAnswerClass: 'green-border',
+    });
   }
 
   createAnswersButtons() {
     const { results } = this.props;
+    const { correctAnswerClass, incorrectAnswerClass, randomIndexes } = this.state;
     const answers = results[0].incorrect_answers.map((answer, index) => (
-      <button data-testid={`wrong-answer-${index}`} type="button" key={answer}>
+      <button
+        data-testid={`wrong-answer-${index}`}
+        type="button"
+        key={answer}
+        className={incorrectAnswerClass}
+        onClick={() => this.changeClass()}
+      >
         {answer}
       </button>
     ));
     answers.splice(
-      getRandomIndex(results[0].incorrect_answers.length), 0,
-      <button data-testid="correct-answer" type="button" key={results[0].correct_answer}>
+      randomIndexes[0],
+      0,
+      <button
+        data-testid="correct-answer"
+        className={correctAnswerClass}
+        onClick={() => this.changeClass()}
+        type="button"
+        key={results[0].correct_answer}
+      >
         {results[0].correct_answer}
       </button>,
     );
@@ -30,19 +57,18 @@ export class Game extends Component {
   }
 
   render() {
-    const {
-      token,
-      fetch,
-      tokenIsFetching,
-      responseCode,
-      gameIsFetching,
-      results,
-    } = this.props;
+    const { token, fetch, tokenIsFetching, responseCode, gameIsFetching, results } = this.props;
+    const { randomIndexes } = this.state;
     if (!tokenIsFetching && responseCode === -1) {
       fetch(token);
     }
     if (tokenIsFetching || gameIsFetching) {
       return <span>Loading</span>;
+    }
+    if (results.length > 0 && randomIndexes.length === 0) {
+      const index = Object.values(results)
+        .map((result) => getRandomIndex(result.incorrect_answers.length));
+      this.setState({ randomIndexes: index });
     }
     return (
       <div className="white-text">
