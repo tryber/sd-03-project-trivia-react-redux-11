@@ -22,12 +22,12 @@ class Feedback extends Component {
     return (
       <div>
         <header><TriviaHeader /></header>
-          <h2 data-testid="feedback-text">{answerTitle}</h2>
-          <h3 data-testid="feedback-total-question">{`Você acertou ${assertions || 0} questões!`}</h3>
-          <h3 data-testid="feedback-total-score">{`Um total de ${score || 0} pontos`}</h3>
+        <h2 data-testid="feedback-text">{answerTitle}</h2>
+        <h3 data-testid="feedback-total-question">{`Você acertou ${assertions || 0} questões!`}</h3>
+        <h3 data-testid="feedback-total-score">{`Um total de ${score || 0} pontos`}</h3>
         <section>
           <div>
-            <Link 
+            <Link
               data-testid="btn-ranking"
               to="/ranking"
             >
@@ -35,8 +35,8 @@ class Feedback extends Component {
             </Link>
           </div>
           <div>
-            <Link 
-            data-testid="btn-play-again"
+            <Link
+              data-testid="btn-play-again"
               to="/"
               onClick={() => { Feedback.redirectGame(resetTimerNow, resetScore, resetFilter); }}
             >
