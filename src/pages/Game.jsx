@@ -7,6 +7,7 @@ import TriviaHeader from '../components/TriviaHeader';
 import Loading from '../components/Loading';
 import changeScore from '../actions/changeScore';
 import addAssertion from '../actions/addAssertion';
+import { withRouter } from "react-router-dom";
 
 const getRandomIndex = (max) => Math.round(Math.random() * max);
 
@@ -25,6 +26,8 @@ export class Game extends Component {
       randomIndexes: [],
       timer: 30,
       disableButton: false,
+      questionIndex: 0,
+      nextButtonClass: 'hide',
     };
     this.createAnswersButtons = this.createAnswersButtons.bind(this);
     this.changeClass = this.changeClass.bind(this);
@@ -33,6 +36,7 @@ export class Game extends Component {
     this.timerCountdown = this.timerCountdown.bind(this);
     this.incorrectAnswerButton = this.incorrectAnswerButton.bind(this);
     this.correctAnswerButton = this.correctAnswerButton.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +66,7 @@ export class Game extends Component {
       incorrectAnswerClass: 'red-border',
       correctAnswerClass: 'green-border',
       disableButton: true,
+      nextButtonClass: '',
     });
   }
 
@@ -88,7 +93,7 @@ export class Game extends Component {
 
   correctAnswerButton() {
     const { results, changeScr, addAssert } = this.props;
-    const { correctAnswerClass, disableButton, intervalId, timer } = this.state;
+    const { correctAnswerClass, disableButton, intervalId, timer, questionIndex } = this.state;
     return (
       <li>
         <button
@@ -96,15 +101,15 @@ export class Game extends Component {
           className={`waves-effect deep-orange btn width-90 margin-10p ${correctAnswerClass}`}
           onClick={() => {
             clearInterval(intervalId);
-            changeScr(calculateScore(timer, results[0].difficulty));
+            changeScr(calculateScore(timer, results[questionIndex].difficulty));
             addAssert();
             this.changeClass();
           }}
           type="button"
           disabled={disableButton}
-          key={results[0].correct_answer}
+          key={results[questionIndex].correct_answer}
         >
-          {results[0].correct_answer}
+          {results[questionIndex].correct_answer}
         </button>
       </li>
     );
@@ -112,10 +117,10 @@ export class Game extends Component {
 
   createAnswersButtons() {
     const { results } = this.props;
-    const { randomIndexes } = this.state;
-    const answers = results[0].incorrect_answers
+    const { randomIndexes, questionIndex } = this.state;
+    const answers = results[questionIndex].incorrect_answers
       .map((answer, index) => this.incorrectAnswerButton(answer, index));
-    answers.splice(randomIndexes[0], 0, this.correctAnswerButton());
+    answers.splice(randomIndexes[questionIndex], 0, this.correctAnswerButton());
     return answers;
   }
 
@@ -136,9 +141,26 @@ export class Game extends Component {
     }
   }
 
+  nextQuestion() {
+    const { questionIndex } = this.state;
+    const { history } = this.props;
+    if (questionIndex === 4) {
+      history.push('/feedback');
+    }
+    this.setState({
+      questionIndex: questionIndex + 1,
+      timer: 30,
+      nextButtonClass: 'hide',
+      incorrectAnswerClass: '',
+      correctAnswerClass: '',
+      disableButton: false,
+    });
+    this.timerCountdown();
+  }
+
   render() {
     const { results, gameIsFetching, tokenIsFetching } = this.props;
-    const { timer } = this.state;
+    const { timer, questionIndex, nextButtonClass } = this.state;
     this.fetchTrivia();
     if (tokenIsFetching || gameIsFetching) {
       return <Loading />;
@@ -150,14 +172,15 @@ export class Game extends Component {
           <TriviaHeader />
           <div className="row black-coral">
             <div className="col s6">
-              <h5 data-testid="question-category">{results[0].category}</h5>
-              <p data-testid="question-text">{results[0].question}</p>
-              <p>Tempo: {timer}</p>
+              <h5 data-testid="question-category">{results[questionIndex].category}</h5>
+              <p data-testid="question-text">{results[questionIndex].question}</p>
+              <p>Timer: {timer}</p>
             </div>
             <div className="col s6">
               <ul>{this.createAnswersButtons()}</ul>
             </div>
           </div>
+          <button type="button" className={nextButtonClass} data-testid="btn-next" onClick={() => this.nextQuestion()}>Next</button>
         </div>
       </div>
     );
@@ -186,10 +209,11 @@ Game.propTypes = {
   responseCode: PropTypes.number.isRequired,
   gameIsFetching: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 Game.defaultProps = {
   token: null,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Game));
