@@ -5,8 +5,15 @@ import PropTypes from 'prop-types';
 import fetchTrivia from '../actions/fetchTrivia';
 import TriviaHeader from '../components/TriviaHeader';
 import Loading from '../components/Loading';
+import changeScore from '../actions/changeScore';
+import addAssertion from '../actions/addAssertion';
 
 const getRandomIndex = (max) => Math.round(Math.random() * max);
+
+const calculateScore = (timer, difficulty) => {
+  const dif = { hard: 3, medium: 2, easy: 1 };
+  return 10 + (timer * dif[difficulty]);
+};
 
 export class Game extends Component {
   constructor(props) {
@@ -44,10 +51,7 @@ export class Game extends Component {
           return { timer: state.timer - 1 };
         }
         this.changeClass();
-        return {
-          disableButton: true,
-          timer: 0,
-        };
+        return { timer: 0 };
       });
     }, 1000);
     this.setState({ intervalId });
@@ -57,11 +61,12 @@ export class Game extends Component {
     this.setState({
       incorrectAnswerClass: 'red-border',
       correctAnswerClass: 'green-border',
+      disableButton: true,
     });
   }
 
   incorrectAnswerButton(answer, index) {
-    const { incorrectAnswerClass, disableButton } = this.state;
+    const { incorrectAnswerClass, disableButton, intervalId } = this.state;
     return (
       <li>
         <button
@@ -70,7 +75,10 @@ export class Game extends Component {
           key={answer}
           disabled={disableButton}
           className={`waves-effect deep-orange btn width-90 margin-10p ${incorrectAnswerClass}`}
-          onClick={() => this.changeClass()}
+          onClick={() => {
+            this.changeClass();
+            clearInterval(intervalId);
+          }}
         >
           {answer}
         </button>
@@ -79,14 +87,19 @@ export class Game extends Component {
   }
 
   correctAnswerButton() {
-    const { results } = this.props;
-    const { correctAnswerClass, disableButton } = this.state;
+    const { results, changeScr, addAssert } = this.props;
+    const { correctAnswerClass, disableButton, intervalId, timer } = this.state;
     return (
       <li>
         <button
           data-testid="correct-answer"
           className={`waves-effect deep-orange btn width-90 margin-10p ${correctAnswerClass}`}
-          onClick={() => this.changeClass()}
+          onClick={() => {
+            clearInterval(intervalId);
+            changeScr(calculateScore(timer, results[0].difficulty));
+            addAssert();
+            this.changeClass();
+          }}
           type="button"
           disabled={disableButton}
           key={results[0].correct_answer}
@@ -151,7 +164,10 @@ export class Game extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetch: fetchTrivia }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
+  dispatch,
+);
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token.token,
@@ -164,6 +180,7 @@ const mapStateToProps = (state) => ({
 Game.propTypes = {
   token: PropTypes.string,
   fetch: PropTypes.func.isRequired,
+  changeScr: PropTypes.func.isRequired,
   tokenIsFetching: PropTypes.bool.isRequired,
   responseCode: PropTypes.number.isRequired,
   gameIsFetching: PropTypes.bool.isRequired,

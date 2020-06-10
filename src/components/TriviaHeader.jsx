@@ -35,7 +35,7 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
   );
 };
 
-const mapStateToProps = ({ userReducer: { score, name, gravatarEmail } }) => ({
+const mapStateToProps = ({ userReducer: { player: { score, name, gravatarEmail } } }) => ({
   score,
   name,
   gravatarEmail,
