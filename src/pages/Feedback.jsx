@@ -12,24 +12,18 @@ class Feedback extends Component {
       <div>
         <header><TriviaHeader /></header>
         <h2 data-testid="feedback-text">{answerTitle}</h2>
-        <h3 data-testid="feedback-total-question">{`Você acertou ${assertions || 0} questões!`}</h3>
-        <h3 data-testid="feedback-total-score">{`Um total de ${score || 0} pontos`}</h3>
+        <h3>
+          Você acertou
+          <span data-testid="feedback-total-question">{assertions || 0}</span>
+          questões!
+        </h3>
+        <h3>Um total de <span data-testid="feedback-total-score">{score || 0}</span> pontos</h3>
         <section>
           <div>
-            <Link
-              data-testid="btn-ranking"
-              to="/ranking"
-            >
-              VER RANKING
-            </Link>
+            <Link data-testid="btn-ranking" to="/ranking">VER RANKING</Link>
           </div>
           <div>
-            <Link
-              data-testid="btn-play-again"
-              to="/"
-            >
-              JOGAR NOVAMENTE
-            </Link>
+            <Link data-testid="btn-play-again" to="/">JOGAR NOVAMENTE</Link>
           </div>
         </section>
       </div>
