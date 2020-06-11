@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+var d = new Date();
+
 class Ranking extends Component {
   render() {
     const rankedLadder = localStorage.getItem('ranking') !== null ? JSON.parse(localStorage.getItem('ranking')) : { ranking: { name: '', score: '', picture: '' } };
@@ -10,7 +12,7 @@ class Ranking extends Component {
         <ol>
           {rankedLadder.map(
             (ranking, index) => (
-              <li key={`${ranking.name}_${index}`}>
+              <li key={`${d}`}>
                 <div>
                   <img src={ranking.picture} alt={`${ranking.name}`} />
                   <span data-testid={`player-name-${index}`}>{`${ranking.name} `} pontuou</span>
