@@ -6,6 +6,7 @@ import Settings from './pages/Settings';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Game from './pages/Game';
+import Feedback from './pages/Feedback';
 
 export default function App() {
   return (
@@ -20,6 +21,9 @@ export default function App() {
           </Route>
           <Route path="/game">
             <Game />
+          </Route>
+          <Route path="/feedback">
+            <Feedback />
           </Route>
         </Switch>
         <Footer />
