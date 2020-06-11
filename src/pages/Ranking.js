@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Ranking extends Component {
-  ranking = {
-    name: '',
-    score: '',
-    picture: '',
-  }
   render() {
-    const rankedLadder = localStorage.getItem('ranking') !== null ? JSON.parse(localStorage.getItem('ranking')) : [];
+    const rankedLadder = localStorage.getItem('ranking') !== null ? JSON.parse(localStorage.getItem('ranking')) : { ranking: { name: '', score: '', picture: '' } };
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
@@ -18,14 +13,8 @@ class Ranking extends Component {
               <li key={`${ranking.name}_${index}`}>
                 <div>
                   <img src={ranking.picture} alt={`${ranking.name}`} />
-                </div>
-                <div>
-                  <span data-testid={`player-name-${index}`}>
-                    {`${ranking.name} `} pontuou
-                  </span>
-                  <span data-testid={`player-score-${index}`}>
-                    {`${ranking.score}`}
-                  </span>
+                  <span data-testid={`player-name-${index}`}>{`${ranking.name} `} pontuou</span>
+                  <span data-testid={`player-score-${index}`}>{`${ranking.score}`}</span>
                 </div>
               </li>
             ),
