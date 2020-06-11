@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-var d = new Date();
+let d = new Date();
 
 class Ranking extends Component {
   render() {
