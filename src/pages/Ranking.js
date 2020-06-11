@@ -15,8 +15,9 @@ class Ranking extends Component {
               <li key={`${d}`}>
                 <div>
                   <img src={ranking.picture} alt={`${ranking.name}`} />
-                  <span data-testid={`player-name-${index}`}>{`${ranking.name} `} pontuou</span>
+                  <span data-testid={`player-name-${index}`}>{`${ranking.name} `}</span>
                   <span data-testid={`player-score-${index}`}>{`${ranking.score}`}</span>
+                  <span> pontos</span>
                 </div>
               </li>
             ),
