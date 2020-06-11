@@ -20,20 +20,10 @@ class Feedback extends Component {
         <h3>Um total de <span data-testid="feedback-total-score">{score || 0}</span> pontos</h3>
         <section>
           <div>
-            <Link
-              data-testid="btn-ranking"
-              to="/ranking"
-            >
-              VER RANKING
-            </Link>
+            <Link data-testid="btn-ranking" to="/ranking">VER RANKING</Link>
           </div>
           <div>
-            <Link
-              data-testid="btn-play-again"
-              to="/"
-            >
-              JOGAR NOVAMENTE
-            </Link>
+            <Link data-testid="btn-play-again" to="/">JOGAR NOVAMENTE</Link>
           </div>
         </section>
       </div>
