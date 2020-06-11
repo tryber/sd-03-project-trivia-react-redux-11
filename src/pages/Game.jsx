@@ -147,9 +147,7 @@ export class Game extends Component {
   nextQuestion() {
     const { questionIndex } = this.state;
     const { history } = this.props;
-    if (questionIndex === 4) {
-      history.push('/feedback');
-    }
+    if (questionIndex === 4) history.push('/feedback');
     this.setState({
       questionIndex: questionIndex + 1,
       timer: 30,

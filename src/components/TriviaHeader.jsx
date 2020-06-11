@@ -17,16 +17,16 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
         />
         <ul className="right">
           <li>
-            <span
-              data-testid="header-player-name"
-              className="margin-10p"
-            >
+            <span data-testid="header-player-name" className="margin-10p">
               {`Jogador: ${name}`}
             </span>
           </li>
           <li>
-            <span data-testid="header-score" className="margin-10p">
-              Pontos: {score}
+            <span className="margin-10p">
+              Pontos:
+              <span data-testid="header-score">
+                {score}
+              </span>
             </span>
           </li>
         </ul>
@@ -35,7 +35,11 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
   );
 };
 
-const mapStateToProps = ({ userReducer: { player: { score, name, gravatarEmail } } }) => ({
+const mapStateToProps = ({
+  userReducer: {
+    player: { score, name, gravatarEmail },
+  },
+}) => ({
   score,
   name,
   gravatarEmail,
