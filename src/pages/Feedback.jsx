@@ -12,7 +12,11 @@ class Feedback extends Component {
       <div>
         <header><TriviaHeader /></header>
         <h2 data-testid="feedback-text">{answerTitle}</h2>
-        <h3>Você acertou <span data-testid="feedback-total-question">{assertions || 0}</span> questões!</h3>
+        <h3>
+          Você acertou
+          <span data-testid="feedback-total-question">{assertions || 0}</span>
+          questões!
+        </h3>
         <h3>Um total de <span data-testid="feedback-total-score">{score || 0}</span> pontos</h3>
         <section>
           <div>
