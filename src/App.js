@@ -25,6 +25,7 @@ export default function App() {
           </Route>
           <Route path="/ranking">
             <Ranking />
+          </Route>
           <Route path="/feedback">
             <Feedback />
           </Route>
