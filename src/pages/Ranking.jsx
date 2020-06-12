@@ -16,7 +16,7 @@ const Ranking = ({ resetUsr, resetTrv }) => {
       <h1 data-testid="ranking-title">Ranking</h1>
       <ol>
         {rankedLadder
-          .map((ranking, index) => <RankLine ranking={ranking} index={index} />)
+          .map((ranking, index) => <RankLine key={ranking.date} ranking={ranking} index={index} />)
           .sort((rankA, rankB) => rankB.props.ranking.score - rankA.props.ranking.score)}
       </ol>
       <section>

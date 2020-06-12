@@ -150,6 +150,7 @@ export class Game extends Component {
       name,
       score,
       picture: `https://www.gravatar.com/avatar/${MD5(trimmedAndLowercasedMail)}`,
+      date: new Date(),
     };
     if (!localStorage.getItem('ranking')) {
       localStorage.setItem('ranking', JSON.stringify([player]));
