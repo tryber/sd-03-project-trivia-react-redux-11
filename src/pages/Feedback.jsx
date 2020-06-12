@@ -18,9 +18,7 @@ const Feedback = ({ resetUsr, resetTrv }) => {
       <TriviaHeader />
       <h2 data-testid="feedback-text">{answerTitle}</h2>
       <h3>
-        <span>Você acertou </span> 
-        <span data-testid="feedback-total-question">{assertions || 0}</span>
-        <span> questões!</span>
+        <span>Você acertou <span data-testid="feedback-total-question">{assertions || 0}</span> questões!</span>
       </h3>
       <h3>Um total de <span data-testid="feedback-total-score">{score || 0}</span> pontos</h3>
       <div>
