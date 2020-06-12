@@ -135,10 +135,11 @@ export class Game extends Component {
     }
   }
 
-  fetchTrivia() {
+  async fetchTrivia() {
     const { tokenIsFetching, responseCode, token, fetch } = this.props;
     if (!tokenIsFetching && responseCode === -1) {
-      fetch(token);
+      await fetch(token);
+      this.createCorrectAnswerIndexes();
     }
   }
 
@@ -165,16 +166,17 @@ export class Game extends Component {
     if (questionIndex === 4) {
       history.push('/feedback');
       this.addScoreRanking();
+    } else {
+      this.setState({
+        questionIndex: questionIndex + 1,
+        timer: 30,
+        nextButtonClass: 'hide',
+        incorrectAnswerClass: '',
+        correctAnswerClass: '',
+        disableButton: false,
+      });
+      this.timerCountdown();
     }
-    this.setState({
-      questionIndex: questionIndex + 1,
-      timer: 30,
-      nextButtonClass: 'hide',
-      incorrectAnswerClass: '',
-      correctAnswerClass: '',
-      disableButton: false,
-    });
-    this.timerCountdown();
   }
 
   nextButton() {
@@ -198,7 +200,6 @@ export class Game extends Component {
     if (tokenIsFetching || gameIsFetching || !results.length) {
       return <Loading />;
     }
-    this.createCorrectAnswerIndexes();
     return (
       <div className="row">
         <div className="white-text container col offset-s4 s4">
