@@ -76,11 +76,10 @@ export class Game extends Component {
   incorrectAnswerButton(answer, index) {
     const { incorrectAnswerClass, disableButton, intervalId } = this.state;
     return (
-      <li>
+      <li key={answer}>
         <button
           data-testid={`wrong-answer-${index}`}
           type="button"
-          key={answer}
           disabled={disableButton}
           className={`waves-effect deep-orange btn width-90 margin-10p ${incorrectAnswerClass}`}
           onClick={() => {
@@ -98,7 +97,7 @@ export class Game extends Component {
     const { results, changeScr, addAssert } = this.props;
     const { correctAnswerClass, disableButton, intervalId, timer, questionIndex } = this.state;
     return (
-      <li>
+      <li key={results[questionIndex].correct_answer}>
         <button
           data-testid="correct-answer"
           className={`waves-effect deep-orange btn width-90 margin-10p ${correctAnswerClass}`}
@@ -110,7 +109,6 @@ export class Game extends Component {
           }}
           type="button"
           disabled={disableButton}
-          key={results[questionIndex].correct_answer}
         >
           {results[questionIndex].correct_answer}
         </button>
@@ -145,7 +143,7 @@ export class Game extends Component {
   }
 
   addScoreRanking() {
-    const { player: { name, score, gravatarEmail} } = this.props;
+    const { player: { name, score, gravatarEmail } } = this.props;
     const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
     const player = {
       name,
@@ -245,6 +243,7 @@ Game.propTypes = {
   gameIsFetching: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  player: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 Game.defaultProps = {

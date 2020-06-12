@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const RankLine = ({ index, ranking }) => (
   <li>
@@ -10,5 +11,10 @@ const RankLine = ({ index, ranking }) => (
     </div>
   </li>
 );
+
+RankLine.propTypes = {
+  index: PropTypes.number.isRequired,
+  ranking: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default RankLine;
