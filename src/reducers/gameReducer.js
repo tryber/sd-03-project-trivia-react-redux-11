@@ -1,4 +1,4 @@
-import { REQUEST_TRIVIA, RECEIVE_TRIVIA_SUCCESS, RECEIVE_TRIVIA_FAILURE } from '../actions/types';
+import { REQUEST_TRIVIA, RECEIVE_TRIVIA_SUCCESS, RECEIVE_TRIVIA_FAILURE, RESET_TRIVIA } from '../actions/types';
 
 const initialState = {
   gameIsFetching: true,
@@ -16,6 +16,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, gameIsFetching: false, trivia: payload };
     case RECEIVE_TRIVIA_FAILURE:
       return { ...state, gameIsFetching: false, error: payload };
+    case RESET_TRIVIA:
+      return initialState;
     default:
       return state;
   }
