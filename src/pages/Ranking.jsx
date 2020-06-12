@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import resetUser from '../actions/resetUser';
 import resetTrivia from '../actions/resetTrivia';
 import RankLine from '../components/RankLine';
@@ -36,6 +37,11 @@ class Ranking extends Component {
     );
   }
 }
+
+Ranking.propTypes = {
+  resetUsr: PropTypes.func.isRequired,
+  resetTrv: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   { resetUsr: resetUser, resetTrv: resetTrivia }, dispatch,
