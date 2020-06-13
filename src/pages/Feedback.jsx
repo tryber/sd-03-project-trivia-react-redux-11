@@ -32,7 +32,7 @@ const Feedback = ({ resetUsr, resetTrv }) => {
               <Link
                 data-testid="btn-ranking"
                 to="/ranking"
-                className={'waves-effect deep-orange btn margin-10p width-40'}
+                className="waves-effect deep-orange btn margin-10p width-40"
               >
                 RANKING
               </Link>
@@ -45,8 +45,7 @@ const Feedback = ({ resetUsr, resetTrv }) => {
                   resetUsr();
                   resetTrv();
                 }}
-                to="/"
-                className={'waves-effect deep-orange btn margin-10p width-40'}
+                className="waves-effect deep-orange btn margin-10p width-40"
               >
                 PLAY AGAIN
               </Link>

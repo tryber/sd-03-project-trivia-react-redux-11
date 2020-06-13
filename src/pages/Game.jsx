@@ -14,7 +14,7 @@ const getRandomIndex = (max) => Math.round(Math.random() * max);
 
 const calculateScore = (timer, difficulty) => {
   const dif = { hard: 3, medium: 2, easy: 1 };
-  return 10 + timer * dif[difficulty];
+  return 10 + (timer * dif[difficulty]);
 };
 
 export class Game extends Component {
@@ -119,9 +119,8 @@ export class Game extends Component {
   createAnswersButtons() {
     const { results } = this.props;
     const { randomIndexes, questionIndex } = this.state;
-    const answers = results[questionIndex].incorrect_answers.map((answer, index) =>
-      this.incorrectAnswerButton(answer, index),
-    );
+    const answers = results[questionIndex].incorrect_answers
+      .map((answer, index) => this.incorrectAnswerButton(answer, index));
     answers.splice(randomIndexes[questionIndex], 0, this.correctAnswerButton());
     return answers;
   }
@@ -130,9 +129,8 @@ export class Game extends Component {
     const { randomIndexes } = this.state;
     const { results } = this.props;
     if (results.length > 0 && randomIndexes.length === 0) {
-      const index = Object.values(results).map((result) =>
-        getRandomIndex(result.incorrect_answers.length),
-      );
+      const index = Object.values(results)
+        .map((result) => getRandomIndex(result.incorrect_answers.length));
       this.setState({ randomIndexes: index });
     }
   }
@@ -222,11 +220,10 @@ export class Game extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
-    dispatch,
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
+  dispatch,
+);
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token.token,

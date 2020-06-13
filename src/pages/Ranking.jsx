@@ -8,10 +8,9 @@ import resetTrivia from '../actions/resetTrivia';
 import RankLine from '../components/RankLine';
 
 const Ranking = ({ resetUsr, resetTrv }) => {
-  const rankedLadder =
-    localStorage.getItem('ranking') !== null
-      ? JSON.parse(localStorage.getItem('ranking'))
-      : { ranking: { name: '', score: '', picture: '' } };
+  const rankedLadder = localStorage.getItem('ranking') !== null
+    ? JSON.parse(localStorage.getItem('ranking'))
+    : { ranking: { name: '', score: '', picture: '' } };
   return (
     <div className="row">
       <div className="col s4 offset-s4 white-text black-coral">
@@ -29,7 +28,7 @@ const Ranking = ({ resetUsr, resetTrv }) => {
           <Link
             data-testid="btn-go-home"
             to="/"
-            className={'waves-effect deep-orange btn margin-10p width-40'}
+            className="waves-effect deep-orange btn margin-10p width-40"
             onClick={() => {
               resetUsr();
               resetTrv();
