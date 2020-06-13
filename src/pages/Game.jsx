@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import MD5 from 'crypto-js/md5';
 import fetchTrivia from '../actions/fetchTrivia';
 import TriviaHeader from '../components/TriviaHeader';
 import Loading from '../components/Loading';
@@ -38,6 +39,7 @@ export class Game extends Component {
     this.correctAnswerButton = this.correctAnswerButton.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.nextButton = this.nextButton.bind(this);
+    this.addScoreRanking = this.addScoreRanking.bind(this);
   }
 
   componentDidMount() {
@@ -74,11 +76,10 @@ export class Game extends Component {
   incorrectAnswerButton(answer, index) {
     const { incorrectAnswerClass, disableButton, intervalId } = this.state;
     return (
-      <li>
+      <li key={answer}>
         <button
           data-testid={`wrong-answer-${index}`}
           type="button"
-          key={answer}
           disabled={disableButton}
           className={`waves-effect deep-orange btn width-90 margin-10p ${incorrectAnswerClass}`}
           onClick={() => {
@@ -96,7 +97,7 @@ export class Game extends Component {
     const { results, changeScr, addAssert } = this.props;
     const { correctAnswerClass, disableButton, intervalId, timer, questionIndex } = this.state;
     return (
-      <li>
+      <li key={results[questionIndex].correct_answer}>
         <button
           data-testid="correct-answer"
           className={`waves-effect deep-orange btn width-90 margin-10p ${correctAnswerClass}`}
@@ -108,7 +109,6 @@ export class Game extends Component {
           }}
           type="button"
           disabled={disableButton}
-          key={results[questionIndex].correct_answer}
         >
           {results[questionIndex].correct_answer}
         </button>
@@ -119,9 +119,8 @@ export class Game extends Component {
   createAnswersButtons() {
     const { results } = this.props;
     const { randomIndexes, questionIndex } = this.state;
-    const answers = results[questionIndex].incorrect_answers.map((answer, index) =>
-      this.incorrectAnswerButton(answer, index),
-    );
+    const answers = results[questionIndex].incorrect_answers
+      .map((answer, index) => this.incorrectAnswerButton(answer, index));
     answers.splice(randomIndexes[questionIndex], 0, this.correctAnswerButton());
     return answers;
   }
@@ -130,33 +129,55 @@ export class Game extends Component {
     const { randomIndexes } = this.state;
     const { results } = this.props;
     if (results.length > 0 && randomIndexes.length === 0) {
-      const index = Object.values(results).map((result) =>
-        getRandomIndex(result.incorrect_answers.length),
-      );
+      const index = Object.values(results)
+        .map((result) => getRandomIndex(result.incorrect_answers.length));
       this.setState({ randomIndexes: index });
     }
   }
 
-  fetchTrivia() {
+  async fetchTrivia() {
     const { tokenIsFetching, responseCode, token, fetch } = this.props;
     if (!tokenIsFetching && responseCode === -1) {
-      fetch(token);
+      await fetch(token);
+      this.createCorrectAnswerIndexes();
+    }
+  }
+
+  addScoreRanking() {
+    const { player: { name, score, gravatarEmail } } = this.props;
+    const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
+    const player = {
+      name,
+      score,
+      picture: `https://www.gravatar.com/avatar/${MD5(trimmedAndLowercasedMail)}`,
+      date: new Date(),
+    };
+    if (!localStorage.getItem('ranking')) {
+      localStorage.setItem('ranking', JSON.stringify([player]));
+    } else {
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      ranking.push(player);
+      localStorage.setItem('ranking', JSON.stringify(ranking));
     }
   }
 
   nextQuestion() {
     const { questionIndex } = this.state;
     const { history } = this.props;
-    if (questionIndex === 4) history.push('/feedback');
-    this.setState({
-      questionIndex: questionIndex + 1,
-      timer: 30,
-      nextButtonClass: 'hide',
-      incorrectAnswerClass: '',
-      correctAnswerClass: '',
-      disableButton: false,
-    });
-    this.timerCountdown();
+    if (questionIndex === 4) {
+      history.push('/feedback');
+      this.addScoreRanking();
+    } else {
+      this.setState({
+        questionIndex: questionIndex + 1,
+        timer: 30,
+        nextButtonClass: 'hide',
+        incorrectAnswerClass: '',
+        correctAnswerClass: '',
+        disableButton: false,
+      });
+      this.timerCountdown();
+    }
   }
 
   nextButton() {
@@ -177,10 +198,9 @@ export class Game extends Component {
     const { results, gameIsFetching, tokenIsFetching } = this.props;
     const { timer, questionIndex } = this.state;
     this.fetchTrivia();
-    if (tokenIsFetching || gameIsFetching) {
+    if (tokenIsFetching || gameIsFetching || !results.length) {
       return <Loading />;
     }
-    this.createCorrectAnswerIndexes();
     return (
       <div className="row">
         <div className="white-text container col offset-s4 s4">
@@ -204,11 +224,9 @@ export class Game extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
-    dispatch,
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion }, dispatch,
+);
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token.token,
@@ -216,6 +234,7 @@ const mapStateToProps = (state) => ({
   gameIsFetching: state.gameReducer.gameIsFetching,
   responseCode: state.gameReducer.trivia.response_code,
   results: state.gameReducer.trivia.results,
+  player: state.userReducer.player,
 });
 
 Game.propTypes = {
@@ -228,6 +247,7 @@ Game.propTypes = {
   gameIsFetching: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  player: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 Game.defaultProps = {

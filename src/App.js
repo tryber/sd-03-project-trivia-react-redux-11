@@ -6,6 +6,7 @@ import Settings from './pages/Settings';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Game from './pages/Game';
+import Ranking from './pages/Ranking';
 import Feedback from './pages/Feedback';
 
 export default function App() {
@@ -21,6 +22,9 @@ export default function App() {
           </Route>
           <Route path="/game">
             <Game />
+          </Route>
+          <Route path="/ranking">
+            <Ranking />
           </Route>
           <Route path="/feedback">
             <Feedback />
