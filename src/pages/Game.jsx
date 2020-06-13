@@ -164,7 +164,7 @@ export class Game extends Component {
     return (
       <button
         type="button"
-        className={nextButtonClass}
+        className={`waves-effect deep-orange btn margin-10p ${nextButtonClass}`}
         data-testid="btn-next"
         onClick={() => this.nextQuestion()}
       >
@@ -194,8 +194,10 @@ export class Game extends Component {
             <div className="col s6">
               <ul>{this.createAnswersButtons()}</ul>
             </div>
+            <div className="col s12 center-align">
+              {this.nextButton()}
+            </div>
           </div>
-          {this.nextButton()}
         </div>
       </div>
     );
