@@ -18,14 +18,14 @@ const TriviaHeader = ({ score, name, gravatarEmail }) => {
         <ul className="right">
           <li>
             <span data-testid="header-player-name" className="margin-10p">
-              {`Jogador: ${name}`}
+              {`Player: ${name}`}
             </span>
           </li>
           <li>
             <span className="margin-10p">
-              Pontos:
+              Score:
               <span data-testid="header-score">
-                {score}
+                {` ${score}`}
               </span>
             </span>
           </li>

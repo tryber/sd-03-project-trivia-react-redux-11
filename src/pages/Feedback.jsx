@@ -20,12 +20,12 @@ const Feedback = ({ resetUsr, resetTrv }) => {
         <div className="center-align white-text black-coral">
           <h5 data-testid="feedback-text">{answerTitle}</h5>
           <p>
-            Você acertou
+            You got
             <span data-testid="feedback-total-question">{` ${assertions || 0} `}</span>
-            questões!
+            questions,
           </p>
           <p>
-            Um total de <span data-testid="feedback-total-score">{score || 0}</span> pontos
+            and did <span data-testid="feedback-total-score">{score || 0}</span> points
           </p>
           <section>
             <div>

@@ -14,7 +14,7 @@ const getRandomIndex = (max) => Math.round(Math.random() * max);
 
 const calculateScore = (timer, difficulty) => {
   const dif = { hard: 3, medium: 2, easy: 1 };
-  return 10 + (timer * dif[difficulty]);
+  return 10 + timer * dif[difficulty];
 };
 
 export class Game extends Component {
@@ -119,8 +119,9 @@ export class Game extends Component {
   createAnswersButtons() {
     const { results } = this.props;
     const { randomIndexes, questionIndex } = this.state;
-    const answers = results[questionIndex].incorrect_answers
-      .map((answer, index) => this.incorrectAnswerButton(answer, index));
+    const answers = results[questionIndex].incorrect_answers.map((answer, index) =>
+      this.incorrectAnswerButton(answer, index),
+    );
     answers.splice(randomIndexes[questionIndex], 0, this.correctAnswerButton());
     return answers;
   }
@@ -129,8 +130,9 @@ export class Game extends Component {
     const { randomIndexes } = this.state;
     const { results } = this.props;
     if (results.length > 0 && randomIndexes.length === 0) {
-      const index = Object.values(results)
-        .map((result) => getRandomIndex(result.incorrect_answers.length));
+      const index = Object.values(results).map((result) =>
+        getRandomIndex(result.incorrect_answers.length),
+      );
       this.setState({ randomIndexes: index });
     }
   }
@@ -144,7 +146,9 @@ export class Game extends Component {
   }
 
   addScoreRanking() {
-    const { player: { name, score, gravatarEmail } } = this.props;
+    const {
+      player: { name, score, gravatarEmail },
+    } = this.props;
     const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
     const player = {
       name,
@@ -205,18 +209,12 @@ export class Game extends Component {
       <div className="row">
         <div className="white-text container col offset-s4 s4">
           <TriviaHeader />
-          <div className="row black-coral">
-            <div className="col s6">
-              <h5 data-testid="question-category">{results[questionIndex].category}</h5>
-              <p data-testid="question-text">{results[questionIndex].question}</p>
-              <p>Timer: {timer}</p>
-            </div>
-            <div className="col s6">
-              <ul>{this.createAnswersButtons()}</ul>
-            </div>
-            <div className="col s12 center-align">
-              {this.nextButton()}
-            </div>
+          <div className="black-coral center-align">
+            <h5 data-testid="question-category">{results[questionIndex].category}</h5>
+            <p data-testid="question-text">{results[questionIndex].question}</p>
+            <p>Timer: {timer}</p>
+            <ul>{this.createAnswersButtons()}</ul>
+            <div className="center-align">{this.nextButton()}</div>
           </div>
         </div>
       </div>
@@ -224,9 +222,11 @@ export class Game extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(
-  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion }, dispatch,
-);
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
+    dispatch,
+  );
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token.token,
