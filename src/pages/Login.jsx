@@ -80,7 +80,7 @@ class Login extends Component {
   }
 
   async fetchs() {
-    const { fetchTkn, fetchTrv, category, difficulty, type} = this.props;
+    const { fetchTkn, fetchTrv, category, difficulty, type } = this.props;
     await fetchTkn().then((token) => localStorage.setItem('token', JSON.stringify(token.payload)));
     const { token } = JSON.parse(localStorage.getItem('token'));
     fetchTrv(token, category, difficulty, type);
