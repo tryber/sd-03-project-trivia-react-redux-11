@@ -1,36 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 import { getCategory } from '../services/apiRequest';
-
-const difficultSelect = () => (
-  <div>
-    <label htmlFor="difficult">Difficult</label>
-    <div className="input-field col s12">
-      <select className="browser-default" id="difficult">
-        <option value="" disabled selected>
-          Choose your option
-        </option>
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
-    </div>
-  </div>
-);
-
-const typeSelect = () => (
-  <div>
-    <label htmlFor="type">Type</label>
-    <div className="input-field col s12">
-      <select className="browser-default" id="type">
-        <option value="" disabled selected>
-          Choose your option
-        </option>
-        <option value="multiple">Multiple Choice</option>
-        <option value="trueOrFalse">True or False</option>
-      </select>
-    </div>
-  </div>
-);
+import changeCategory from '../actions/changeCategory';
+import changeDifficulty from '../actions/changeDifficulty';
+import changeType from '../actions/changeType';
 
 class Settings extends Component {
   constructor(props) {
@@ -41,6 +16,8 @@ class Settings extends Component {
     };
     this.setCategories = this.setCategories.bind(this);
     this.categorySelect = this.categorySelect.bind(this);
+    this.typeSelect = this.typeSelect.bind(this);
+    this.difficultSelect = this.difficultSelect.bind(this);
   }
 
   componentDidMount() {
@@ -56,17 +33,67 @@ class Settings extends Component {
 
   categorySelect() {
     const { categories } = this.state;
+    const { changeCtgry } = this.props;
     return (
       <div>
         <label htmlFor="category">Category</label>
         <div className="input-field col s12">
-          <select className="browser-default" name="category" id="category">
+          <select
+            onChange={(e) => changeCtgry(e.target.value)}
+            className="browser-default"
+            name="category"
+            id="category"
+          >
             <option value="" disabled selected>
               Choose your option
             </option>
+            <option value="">All</option>
             {categories.map((el) => (
               <option value={el.id}>{el.name}</option>
             ))}
+          </select>
+        </div>
+      </div>
+    );
+  }
+
+  typeSelect() {
+    const { changeTyp } = this.props;
+    return (
+      <div>
+        <label htmlFor="type">Type</label>
+        <div className="input-field col s12">
+          <select onChange={(e) => changeTyp(e.target.value)} className="browser-default" id="type">
+            <option value="" disabled selected>
+              Choose your option
+            </option>
+            <option value="">All</option>
+            <option value="multiple">Multiple Choice</option>
+            <option value="boolean">True or False</option>
+          </select>
+        </div>
+      </div>
+    );
+  }
+
+  difficultSelect() {
+    const { changeDffclty } = this.props;
+    return (
+      <div>
+        <label htmlFor="difficult">Difficult</label>
+        <div className="input-field col s12">
+          <select
+            onChange={(e) => changeDffclty(e.target.value)}
+            className="browser-default"
+            id="difficult"
+          >
+            <option value="" disabled selected>
+              Choose your option
+            </option>
+            <option value="">All</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
           </select>
         </div>
       </div>
@@ -81,8 +108,11 @@ class Settings extends Component {
             <h3 data-testid="settings-title">Settings</h3>
             <div className="col s6 offset-s3">
               {this.categorySelect()}
-              {difficultSelect()}
-              {typeSelect()}
+              {this.difficultSelect()}
+              {this.typeSelect()}
+              <Link className="waves-effect deep-orange btn col s4 offset-s4 margin-20p" to="/">
+                Back
+              </Link>
             </div>
           </div>
         </div>
@@ -91,4 +121,10 @@ class Settings extends Component {
   }
 }
 
-export default Settings;
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    { changeCtgry: changeCategory, changeDffclty: changeDifficulty, changeTyp: changeType },
+    dispatch,
+  );
+
+export default connect(null, mapDispatchToProps)(Settings);

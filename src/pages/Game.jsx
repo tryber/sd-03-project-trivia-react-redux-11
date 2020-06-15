@@ -136,9 +136,9 @@ export class Game extends Component {
   }
 
   async fetchTrivia() {
-    const { tokenIsFetching, responseCode, token, fetch } = this.props;
+    const { tokenIsFetching, responseCode, token, fetch, category, difficulty, type } = this.props;
     if (!tokenIsFetching && responseCode === -1) {
-      await fetch(token);
+      await fetch(token, category, difficulty, type);
       this.createCorrectAnswerIndexes();
     }
   }
@@ -232,6 +232,9 @@ const mapStateToProps = (state) => ({
   responseCode: state.gameReducer.trivia.response_code,
   results: state.gameReducer.trivia.results,
   player: state.userReducer.player,
+  category: state.settingReducer.category,
+  difficulty: state.settingReducer.difficulty,
+  type: state.settingReducer.type,
 });
 
 Game.propTypes = {
