@@ -33,7 +33,6 @@ export class Game extends Component {
     this.createAnswersButtons = this.createAnswersButtons.bind(this);
     this.changeClass = this.changeClass.bind(this);
     this.createCorrectAnswerIndexes = this.createCorrectAnswerIndexes.bind(this);
-    this.fetchTrivia = this.fetchTrivia.bind(this);
     this.timerCountdown = this.timerCountdown.bind(this);
     this.incorrectAnswerButton = this.incorrectAnswerButton.bind(this);
     this.correctAnswerButton = this.correctAnswerButton.bind(this);
@@ -135,14 +134,6 @@ export class Game extends Component {
     }
   }
 
-  async fetchTrivia() {
-    const { tokenIsFetching, responseCode, token, fetch, category, difficulty, type } = this.props;
-    if (!tokenIsFetching && responseCode === -1) {
-      await fetch(token, category, difficulty, type);
-      this.createCorrectAnswerIndexes();
-    }
-  }
-
   addScoreRanking() {
     const {
       player: { name, score, gravatarEmail },
@@ -197,10 +188,9 @@ export class Game extends Component {
   }
 
   render() {
-    const { results, gameIsFetching, tokenIsFetching } = this.props;
+    const { results } = this.props;
     const { timer, questionIndex } = this.state;
-    this.fetchTrivia();
-    if (tokenIsFetching || gameIsFetching || !results.length) {
+    if (!results.length) {
       return <Loading />;
     }
     return (
@@ -226,10 +216,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
 );
 
 const mapStateToProps = (state) => ({
-  token: state.tokenReducer.token.token,
-  tokenIsFetching: state.tokenReducer.tokenIsFetching,
-  gameIsFetching: state.gameReducer.gameIsFetching,
-  responseCode: state.gameReducer.trivia.response_code,
   results: state.gameReducer.trivia.results,
   player: state.userReducer.player,
   category: state.settingReducer.category,
@@ -238,20 +224,11 @@ const mapStateToProps = (state) => ({
 });
 
 Game.propTypes = {
-  token: PropTypes.string,
-  fetch: PropTypes.func.isRequired,
   changeScr: PropTypes.func.isRequired,
   addAssert: PropTypes.func.isRequired,
-  tokenIsFetching: PropTypes.bool.isRequired,
-  responseCode: PropTypes.number.isRequired,
-  gameIsFetching: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(PropTypes.object).isRequired,
   history: PropTypes.objectOf(PropTypes.any).isRequired,
   player: PropTypes.objectOf(PropTypes.any).isRequired,
-};
-
-Game.defaultProps = {
-  token: null,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Game));

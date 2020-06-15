@@ -45,12 +45,12 @@ class Settings extends Component {
             name="category"
             id="category"
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Choose your option
             </option>
             <option value="">All</option>
             {categories.map((el) => (
-              <option value={el.id}>{el.name}</option>
+              <option key={el.id} value={el.id}>{el.name}</option>
             ))}
           </select>
         </div>
@@ -65,7 +65,7 @@ class Settings extends Component {
         <label htmlFor="type">Type</label>
         <div className="input-field col s12">
           <select onChange={(e) => changeTyp(e.target.value)} className="browser-default" id="type">
-            <option value="" disabled selected>
+            <option value="" disabled>
               Choose your option
             </option>
             <option value="">All</option>
@@ -88,7 +88,7 @@ class Settings extends Component {
             className="browser-default"
             id="difficult"
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Choose your option
             </option>
             <option value="">All</option>
@@ -122,11 +122,10 @@ class Settings extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    { changeCtgry: changeCategory, changeDffclty: changeDifficulty, changeTyp: changeType },
-    dispatch,
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  { changeCtgry: changeCategory, changeDffclty: changeDifficulty, changeTyp: changeType },
+  dispatch,
+);
 
 Settings.propTypes = {
   changeCtgry: PropTypes.func.isRequired,

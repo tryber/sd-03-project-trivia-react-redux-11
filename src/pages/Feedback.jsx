@@ -5,9 +5,8 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import TriviaHeader from '../components/TriviaHeader';
 import resetUser from '../actions/resetUser';
-import resetTrivia from '../actions/resetTrivia';
 
-const Feedback = ({ resetUsr, resetTrv }) => {
+const Feedback = ({ resetUsr }) => {
   const state = localStorage.getItem('state') !== null
     ? JSON.parse(localStorage.getItem('state'))
     : { player: { assertions: '', score: '' } };
@@ -41,10 +40,7 @@ const Feedback = ({ resetUsr, resetTrv }) => {
               <Link
                 data-testid="btn-play-again"
                 to="/"
-                onClick={() => {
-                  resetUsr();
-                  resetTrv();
-                }}
+                onClick={() => resetUsr()}
                 className="waves-effect deep-orange btn margin-10p width-40"
               >
                 PLAY AGAIN
@@ -59,10 +55,8 @@ const Feedback = ({ resetUsr, resetTrv }) => {
 
 Feedback.propTypes = {
   resetUsr: PropTypes.func.isRequired,
-  resetTrv: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ resetUsr: resetUser, resetTrv: resetTrivia }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ resetUsr: resetUser }, dispatch);
 
 export default connect(null, mapDispatchToProps)(Feedback);
