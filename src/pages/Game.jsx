@@ -144,7 +144,9 @@ export class Game extends Component {
   }
 
   addScoreRanking() {
-    const { player: { name, score, gravatarEmail } } = this.props;
+    const {
+      player: { name, score, gravatarEmail },
+    } = this.props;
     const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
     const player = {
       name,
@@ -185,7 +187,7 @@ export class Game extends Component {
     return (
       <button
         type="button"
-        className={nextButtonClass}
+        className={`waves-effect deep-orange btn margin-10p ${nextButtonClass}`}
         data-testid="btn-next"
         onClick={() => this.nextQuestion()}
       >
@@ -205,17 +207,13 @@ export class Game extends Component {
       <div className="row">
         <div className="white-text container col offset-s4 s4">
           <TriviaHeader />
-          <div className="row black-coral">
-            <div className="col s6">
-              <h5 data-testid="question-category">{results[questionIndex].category}</h5>
-              <p data-testid="question-text">{results[questionIndex].question}</p>
-              <p>Timer: {timer}</p>
-            </div>
-            <div className="col s6">
-              <ul>{this.createAnswersButtons()}</ul>
-            </div>
+          <div className="black-coral center-align">
+            <h5 data-testid="question-category">{results[questionIndex].category}</h5>
+            <p data-testid="question-text">{results[questionIndex].question}</p>
+            <p>Timer: {timer}</p>
+            <ul>{this.createAnswersButtons()}</ul>
+            <div className="center-align">{this.nextButton()}</div>
           </div>
-          {this.nextButton()}
         </div>
       </div>
     );
@@ -223,7 +221,8 @@ export class Game extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
-  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion }, dispatch,
+  { fetch: fetchTrivia, changeScr: changeScore, addAssert: addAssertion },
+  dispatch,
 );
 
 const mapStateToProps = (state) => ({

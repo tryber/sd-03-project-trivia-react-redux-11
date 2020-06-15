@@ -90,8 +90,8 @@ class Login extends Component {
             Play
           </button>
         </Link>
-        <Link to="/settings" data-testid="btn-settings" className="col offset-s2 s1">
-          <i className="material-icons" style={{ verticalAlign: '-12px' }}>
+        <Link to="/settings" data-testid="btn-settings" className="col offset-s3 s1">
+          <i className="material-icons deep-orange-text" style={{ verticalAlign: '-12px' }}>
             settings
           </i>
         </Link>
