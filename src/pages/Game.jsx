@@ -52,13 +52,13 @@ export class Game extends Component {
 
   timerCountdown() {
     const intervalId = setInterval(() => {
-      this.setState((state) => {
-        if (state.timer > 1) {
-          return { timer: state.timer - 1 };
-        }
+      const { timer } = this.state;
+      if (timer > 0) {
+        this.setState((state) => ({ timer: state.timer - 1 }));
+      } else {
+        clearInterval(intervalId);
         this.changeClass();
-        return { timer: 0 };
-      });
+      }
     }, 1000);
     this.setState({ intervalId });
   }
