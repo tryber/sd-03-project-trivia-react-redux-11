@@ -45,6 +45,13 @@ export class Game extends Component {
     this.timerCountdown();
   }
 
+  componentDidUpdate(prevProps) {
+    const { results } = this.props;
+    if (results !== prevProps.results && results.length) {
+      this.createCorrectAnswerIndexes();
+    }
+  }
+
   componentWillUnmount() {
     const { intervalId } = this.state;
     clearInterval(intervalId);
@@ -193,7 +200,6 @@ export class Game extends Component {
     if (!results.length) {
       return <Loading />;
     }
-    this.createCorrectAnswerIndexes();
     return (
       <div className="row">
         <div className="white-text container col offset-s4 s4">
