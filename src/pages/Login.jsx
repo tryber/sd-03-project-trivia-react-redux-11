@@ -136,6 +136,7 @@ class Login extends Component {
 Login.propTypes = {
   changeUser: PropTypes.func.isRequired,
   resetTrv: PropTypes.func.isRequired,
+  resetUsr: PropTypes.func.isRequired,
   fetchTkn: PropTypes.func.isRequired,
   fetchTrv: PropTypes.func.isRequired,
   category: PropTypes.string.isRequired,

@@ -2,8 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TriviaHeader from '../components/TriviaHeader';
 
+const linkSection = () => (
+  <section>
+    <div>
+      <Link
+        data-testid="btn-ranking"
+        to="/ranking"
+        className="waves-effect deep-orange btn margin-10p width-40"
+      >
+        RANKING
+      </Link>
+    </div>
+    <div>
+      <Link
+        data-testid="btn-play-again"
+        to="/"
+        className="waves-effect deep-orange btn margin-10p width-40"
+      >
+        PLAY AGAIN
+      </Link>
+    </div>
+  </section>
+);
+
 const Feedback = () => {
-  const state = localStorage.getItem('state') !== null
+  const state = localStorage.getItem('state')
     ? JSON.parse(localStorage.getItem('state'))
     : { player: { assertions: '', score: '' } };
   const { assertions, score } = state.player;
@@ -22,26 +45,7 @@ const Feedback = () => {
           <p>
             and did <span data-testid="feedback-total-score">{score || 0}</span> points
           </p>
-          <section>
-            <div>
-              <Link
-                data-testid="btn-ranking"
-                to="/ranking"
-                className="waves-effect deep-orange btn margin-10p width-40"
-              >
-                RANKING
-              </Link>
-            </div>
-            <div>
-              <Link
-                data-testid="btn-play-again"
-                to="/"
-                className="waves-effect deep-orange btn margin-10p width-40"
-              >
-                PLAY AGAIN
-              </Link>
-            </div>
-          </section>
+          {linkSection()}
         </div>
       </div>
     </div>
