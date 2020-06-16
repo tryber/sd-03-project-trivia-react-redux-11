@@ -7,6 +7,7 @@ import fetchToken from '../actions/fetchToken';
 import changeUserInfo from '../actions/changeUserInfo';
 import resetTrivia from '../actions/resetTrivia';
 import fetchTrivia from '../actions/fetchTrivia';
+import resetUser from '../actions/resetUser';
 
 class Login extends Component {
   constructor(props) {
@@ -25,8 +26,9 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    const { resetTrv } = this.props;
+    const { resetTrv, resetUsr } = this.props;
     resetTrv();
+    resetUsr();
   }
 
   async handleChange(e) {
@@ -159,6 +161,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators(
     fetchTrv: fetchTrivia,
     changeUser: changeUserInfo,
     resetTrv: resetTrivia,
+    resetUsr: resetUser,
   }, dispatch,
 );
 
