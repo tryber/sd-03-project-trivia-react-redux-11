@@ -2,10 +2,7 @@ import { REQUEST_TRIVIA, RECEIVE_TRIVIA_SUCCESS, RECEIVE_TRIVIA_FAILURE, RESET_T
 
 const initialState = {
   gameIsFetching: true,
-  trivia: {
-    response_code: -1,
-    results: [],
-  },
+  trivia: { results: [] },
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -15,7 +12,7 @@ export default (state = initialState, { type, payload }) => {
     case RECEIVE_TRIVIA_SUCCESS:
       return {
         gameIsFetching: false,
-        trivia: { responseCode: payload.responseCode, results: [...payload.results] },
+        trivia: { results: [...payload.results] },
       };
     case RECEIVE_TRIVIA_FAILURE:
       return { ...state, gameIsFetching: false, error: payload };
