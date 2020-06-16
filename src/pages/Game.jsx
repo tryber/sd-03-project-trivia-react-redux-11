@@ -193,6 +193,7 @@ export class Game extends Component {
     if (!results.length) {
       return <Loading />;
     }
+    this.createCorrectAnswerIndexes();
     return (
       <div className="row">
         <div className="white-text container col offset-s4 s4">
