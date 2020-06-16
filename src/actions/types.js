@@ -9,3 +9,6 @@ export const CHANGE_SCORE = 'CHANGE_SCORE';
 export const ADD_ASSERTION = 'ADD_ASSERTION';
 export const RESET_TRIVIA = 'RESET_TRIVIA';
 export const RESET_USER = 'RESET_USER';
+export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
+export const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
+export const CHANGE_TYPE = 'CHANGE_TYPE';

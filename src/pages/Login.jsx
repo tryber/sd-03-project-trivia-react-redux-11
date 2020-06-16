@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchToken from '../actions/fetchToken';
 import changeUserInfo from '../actions/changeUserInfo';
+import resetTrivia from '../actions/resetTrivia';
+import fetchTrivia from '../actions/fetchTrivia';
+import resetUser from '../actions/resetUser';
 
 class Login extends Component {
   constructor(props) {
@@ -19,6 +22,13 @@ class Login extends Component {
     this.createInputPlayerName = this.createInputPlayerName.bind(this);
     this.createInputEmail = this.createInputEmail.bind(this);
     this.cardButtons = this.cardButtons.bind(this);
+    this.fetchs = this.fetchs.bind(this);
+  }
+
+  componentDidMount() {
+    const { resetTrv, resetUsr } = this.props;
+    resetTrv();
+    resetUsr();
   }
 
   async handleChange(e) {
@@ -71,8 +81,15 @@ class Login extends Component {
     );
   }
 
+  async fetchs() {
+    const { fetchTkn, fetchTrv, category, difficulty, type } = this.props;
+    await fetchTkn().then((token) => localStorage.setItem('token', JSON.stringify(token.payload)));
+    const { token } = JSON.parse(localStorage.getItem('token'));
+    fetchTrv(token, category, difficulty, type);
+  }
+
   cardButtons() {
-    const { fetch, changeUser } = this.props;
+    const { changeUser } = this.props;
     const { enableButton, name, gravatarEmail } = this.state;
     return (
       <div className="row">
@@ -80,8 +97,8 @@ class Login extends Component {
           <button
             type="button"
             onClick={() => {
-              fetch();
               changeUser(name, gravatarEmail);
+              this.fetchs();
             }}
             disabled={enableButton}
             className="waves-effect deep-orange btn col s4 offset-s4"
@@ -117,12 +134,36 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  fetch: PropTypes.func.isRequired,
   changeUser: PropTypes.func.isRequired,
+  resetTrv: PropTypes.func.isRequired,
+  resetUsr: PropTypes.func.isRequired,
+  fetchTkn: PropTypes.func.isRequired,
+  fetchTrv: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  token: state.tokenReducer.token.token,
+  tokenIsFetching: state.tokenReducer.tokenIsFetching,
+  gameIsFetching: state.gameReducer.gameIsFetching,
+  responseCode: state.gameReducer.trivia.response_code,
+  results: state.gameReducer.trivia.results,
+  player: state.userReducer.player,
+  category: state.settingReducer.category,
+  difficulty: state.settingReducer.difficulty,
+  type: state.settingReducer.type,
+});
+
 const mapDispatchToProps = (dispatch) => bindActionCreators(
-  { fetch: fetchToken, changeUser: changeUserInfo }, dispatch,
+  {
+    fetchTkn: fetchToken,
+    fetchTrv: fetchTrivia,
+    changeUser: changeUserInfo,
+    resetTrv: resetTrivia,
+    resetUsr: resetUser,
+  }, dispatch,
 );
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

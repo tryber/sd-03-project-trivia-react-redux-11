@@ -1,13 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
-import resetUser from '../actions/resetUser';
-import resetTrivia from '../actions/resetTrivia';
 import RankLine from '../components/RankLine';
 
-const Ranking = ({ resetUsr, resetTrv }) => {
+const Ranking = () => {
   const rankedLadder = localStorage.getItem('ranking') !== null
     ? JSON.parse(localStorage.getItem('ranking'))
     : { ranking: { name: '', score: '', picture: '' } };
@@ -29,10 +24,6 @@ const Ranking = ({ resetUsr, resetTrv }) => {
             data-testid="btn-go-home"
             to="/"
             className="waves-effect deep-orange btn margin-10p width-40"
-            onClick={() => {
-              resetUsr();
-              resetTrv();
-            }}
           >
             BACK
           </Link>
@@ -42,12 +33,4 @@ const Ranking = ({ resetUsr, resetTrv }) => {
   );
 };
 
-Ranking.propTypes = {
-  resetUsr: PropTypes.func.isRequired,
-  resetTrv: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ resetUsr: resetUser, resetTrv: resetTrivia }, dispatch);
-
-export default connect(null, mapDispatchToProps)(Ranking);
+export default Ranking;

@@ -13,7 +13,10 @@ export default (state = initialState, { type, payload }) => {
     case REQUEST_TRIVIA:
       return { ...state, gameIsFetching: true };
     case RECEIVE_TRIVIA_SUCCESS:
-      return { ...state, gameIsFetching: false, trivia: payload };
+      return {
+        gameIsFetching: false,
+        trivia: { responseCode: payload.responseCode, results: [...payload.results] },
+      };
     case RECEIVE_TRIVIA_FAILURE:
       return { ...state, gameIsFetching: false, error: payload };
     case RESET_TRIVIA:

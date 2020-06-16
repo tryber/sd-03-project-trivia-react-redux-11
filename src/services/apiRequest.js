@@ -5,8 +5,8 @@ export async function getToken() {
       .then((json) => (token.ok ? Promise.resolve(json) : Promise.reject(json))));
 }
 
-export async function getTrivia(token) {
-  return fetch(`https://opentdb.com/api.php?amount=5&token=${token}`)
+export async function getTrivia(token, category, difficulty, type) {
+  return fetch(`https://opentdb.com/api.php?amount=5&token=${token}&category=${category}&difficulty=${difficulty}&type=${type}`)
     .then((trivia) => trivia
       .json()
       .then((json) => (trivia.ok ? Promise.resolve(json) : Promise.reject(json))));

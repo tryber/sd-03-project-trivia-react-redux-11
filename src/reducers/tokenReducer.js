@@ -20,7 +20,6 @@ export default (state = initialState, { type, payload }) => {
     case REQUEST_TOKEN:
       return { ...state, tokenIsFetching: true };
     case RECEIVE_TOKEN_SUCCESS:
-      localStorage.setItem('token', JSON.stringify(payload));
       return { ...state, tokenIsFetching: false, token: payload };
     case RECEIVE_TOKEN_FAILURE:
       return { ...state, tokenIsFetching: false, error: payload };

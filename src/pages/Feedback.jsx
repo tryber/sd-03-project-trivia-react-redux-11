@@ -1,14 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import PropTypes from 'prop-types';
 import TriviaHeader from '../components/TriviaHeader';
-import resetUser from '../actions/resetUser';
-import resetTrivia from '../actions/resetTrivia';
 
-const Feedback = ({ resetUsr, resetTrv }) => {
-  const state = localStorage.getItem('state') !== null
+const linkSection = () => (
+  <section>
+    <div>
+      <Link
+        data-testid="btn-ranking"
+        to="/ranking"
+        className="waves-effect deep-orange btn margin-10p width-40"
+      >
+        RANKING
+      </Link>
+    </div>
+    <div>
+      <Link
+        data-testid="btn-play-again"
+        to="/"
+        className="waves-effect deep-orange btn margin-10p width-40"
+      >
+        PLAY AGAIN
+      </Link>
+    </div>
+  </section>
+);
+
+const Feedback = () => {
+  const state = localStorage.getItem('state')
     ? JSON.parse(localStorage.getItem('state'))
     : { player: { assertions: '', score: '' } };
   const { assertions, score } = state.player;
@@ -27,42 +45,11 @@ const Feedback = ({ resetUsr, resetTrv }) => {
           <p>
             and did <span data-testid="feedback-total-score">{score || 0}</span> points
           </p>
-          <section>
-            <div>
-              <Link
-                data-testid="btn-ranking"
-                to="/ranking"
-                className="waves-effect deep-orange btn margin-10p width-40"
-              >
-                RANKING
-              </Link>
-            </div>
-            <div>
-              <Link
-                data-testid="btn-play-again"
-                to="/"
-                onClick={() => {
-                  resetUsr();
-                  resetTrv();
-                }}
-                className="waves-effect deep-orange btn margin-10p width-40"
-              >
-                PLAY AGAIN
-              </Link>
-            </div>
-          </section>
+          {linkSection()}
         </div>
       </div>
     </div>
   );
 };
 
-Feedback.propTypes = {
-  resetUsr: PropTypes.func.isRequired,
-  resetTrv: PropTypes.func.isRequired,
-};
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ resetUsr: resetUser, resetTrv: resetTrivia }, dispatch);
-
-export default connect(null, mapDispatchToProps)(Feedback);
+export default Feedback;
