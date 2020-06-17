@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MD5 from 'crypto-js/md5';
+import he from 'he';
 import fetchTrivia from '../actions/fetchTrivia';
 import TriviaHeader from '../components/TriviaHeader';
 import Loading from '../components/Loading';
@@ -93,7 +94,7 @@ export class Game extends Component {
             clearInterval(intervalId);
           }}
         >
-          {answer}
+          {he.decode(answer)}
         </button>
       </li>
     );
@@ -116,7 +117,7 @@ export class Game extends Component {
           type="button"
           disabled={disableButton}
         >
-          {results[questionIndex].correct_answer}
+          {he.decode(results[questionIndex].correct_answer)}
         </button>
       </li>
     );
@@ -206,7 +207,9 @@ export class Game extends Component {
           <TriviaHeader />
           <div className="black-coral center-align">
             <h5 data-testid="question-category">{results[questionIndex].category}</h5>
-            <p data-testid="question-text">{results[questionIndex].question}</p>
+            <p data-testid="question-text">
+              {he.decode(results[questionIndex].question)}
+            </p>
             <p>Timer: {timer}</p>
             <ul>{this.createAnswersButtons()}</ul>
             <div className="center-align">{this.nextButton()}</div>
